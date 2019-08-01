@@ -1,0 +1,10 @@
+actor: ApiTester
+modules:
+    enabled:
+        - Asserts
+        - REST:
+            url: https://minhasvendas.melhorenvio.work/api/v1
+            depends: PhpBrowser
+            part: Json
+
+    

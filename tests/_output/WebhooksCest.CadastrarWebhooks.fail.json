@@ -1,0 +1,76 @@
+{
+    "message": "The stream or file \"/var/www/minhasvendas.melhorenvio.work/storage/logs/laravel.log\" could not be opened: failed to open stream: Permission denied",
+    "exception": "UnexpectedValueException",
+    "file": "/var/www/minhasvendas.melhorenvio.work/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php",
+    "line": 107,
+    "trace": [
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/monolog/monolog/src/Monolog/Handler/AbstractProcessingHandler.php",
+            "line": 39,
+            "function": "write",
+            "class": "Monolog\\Handler\\StreamHandler",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/monolog/monolog/src/Monolog/Logger.php",
+            "line": 344,
+            "function": "handle",
+            "class": "Monolog\\Handler\\AbstractProcessingHandler",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/monolog/monolog/src/Monolog/Logger.php",
+            "line": 707,
+            "function": "addRecord",
+            "class": "Monolog\\Logger",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/laravel/framework/src/Illuminate/Log/Logger.php",
+            "line": 176,
+            "function": "error",
+            "class": "Monolog\\Logger",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/laravel/framework/src/Illuminate/Log/Logger.php",
+            "line": 87,
+            "function": "writeLog",
+            "class": "Illuminate\\Log\\Logger",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/laravel/framework/src/Illuminate/Log/LogManager.php",
+            "line": 490,
+            "function": "error",
+            "class": "Illuminate\\Log\\Logger",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php",
+            "line": 114,
+            "function": "error",
+            "class": "Illuminate\\Log\\LogManager",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/app/Exceptions/Handler.php",
+            "line": 45,
+            "function": "report",
+            "class": "Illuminate\\Foundation\\Exceptions\\Handler",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/minhasvendas.melhorenvio.work/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php",
+            "line": 81,
+            "function": "report",
+            "class": "App\\Exceptions\\Handler",
+            "type": "->"
+        },
+        {
+            "function": "handleException",
+            "class": "Illuminate\\Foundation\\Bootstrap\\HandleExceptions",
+            "type": "->"
+        }
+    ]
+}
