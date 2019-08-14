@@ -44,7 +44,7 @@ class ClientsCest
     */
     public function CadastrarError(APITester $I, \Codeception\Example $example){
 
-        $this->cadastro_endpoint = '/apps/clients';
+        $this->cadastro_endpoint = '/clients';
 
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('Accept', 'application/json');
@@ -76,7 +76,7 @@ class ClientsCest
     // */
     public function CadastrarClient(ApiTester $I){
 
-        $this->cadastro_endpoint = '/apps/clients';
+        $this->cadastro_endpoint = '/clients';
 
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('Accept', 'application/json');
@@ -127,7 +127,7 @@ class ClientsCest
     */
     public function AtualizarClients(ApiTester $I, \Codeception\Example $example){
 
-        $this->atualizar_endpoint = '/apps/clients/';
+        $this->atualizar_endpoint = '/clients/';
 
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('Accept', 'application/json');
