@@ -173,9 +173,9 @@ class ClientsCest
 
 
 
-    /**
-     * @before CadastrarClient
-    */
+    // /**
+    //  * @before CadastrarClient
+    // */
     public function ConsultaClients(ApiTester $I){
 
         $this->consultar_endpoint = '/clients';
@@ -188,11 +188,24 @@ class ClientsCest
         $I->seeResponseCodeIsSuccessful();
         $I->seeResponseMatchesJsonType([
             "data" => 'array',
-            'links' => 'array',
-            'meta' => 'array'
+            'links' => [
+                'first'=>'string',
+                'last'=>'string',
+                'prev'=>'string|null',
+                'next'=>'string|null',
+            ],
+            'meta' => [
+                'current_page'=>'integer',
+                'from'=>'integer|null',
+                'last_page'=>'integer',
+                'path'=>'string',
+                'per_page'=>'integer',
+                'to'=>'integer|null',
+                'total'=>'integer'
+            ]
         ]);
 
-        $I->seeResponseContainsJson($this->past_response);
+        // $I->seeResponseContainsJson($this->past_response);
     }
 
    
