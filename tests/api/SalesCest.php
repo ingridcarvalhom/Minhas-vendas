@@ -224,12 +224,10 @@ class SalesCest
         $I->seeResponseCodeIsSuccessful();
     }
 
-
-
     public function CadastrarVenda(ApiTester $I){
         
         $I->wantTo("Cadastrar Venda");
-
+        sleep(1);
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('Accept', 'application/json');
         $I->amBearerAuthenticated($this->BearerToken);
@@ -277,6 +275,17 @@ class SalesCest
         $this->aux_id = $response['data'][0]['id'];
     }
 
+    protected function CadastrarVenda2(ApiTester $I){
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('Accept', 'application/json');
+        $I->amBearerAuthenticated($this->BearerToken);
+
+        $this->sales_request[0]['client_id'] = 1;
+        $this->sales_request[0]['own_id'] = strval(rand(0,10000));
+
+        $I->sendPOST($this->cadastrar_endpoint,$this->sales_request);
+    }
 
 
     /**
@@ -445,21 +454,16 @@ class SalesCest
         ]);
     }
 
-    // public function PreparaListaVendas(ApiTester $I,){
 
-    //     $I->haveHttpHeader('Content-Type', 'application/json');
-    //     $I->haveHttpHeader('Accept', 'application/json');
-    //     $I->amBearerAuthenticated($this->BearerToken);
-
-
-    // }
 
     /**
-    * @dataprovider SucessListaVendasProvider
+    * @dataprovider FiltroVendasProvider
+    * @before CadastrarVenda
+    * @after DeletarVenda
     */
-    public function SucessListaVendas(ApiTester $I, \Codeception\Example $example){
+    public function FiltroVendas(ApiTester $I, \Codeception\Example $example){
  
-        $I->wantTo("Verifica o filtros");
+        $I->wantTo("Verifica os filtros ".$example['message']);
 
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('Accept', 'application/json');
@@ -469,22 +473,17 @@ class SalesCest
         
         if(isset($example['filtro'])){
 
+
             if(isset($example['field']) && isset($example['value'])){
                 $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['field'].','.$example['value'];
             } 
+
             if(isset($example['value']) && !isset($example['field'])){
                 $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['value'];
             }   
             if (isset($example['old']) && isset($example['new'])){
                 $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['old'].','.$example['new'];
             }
-        }
-    
-        if(isset($example['sort'])){
-            $endpoint = $endpoint.'sort='.$example['sort'];
-        }
-        if(isset($example['limit'])){
-            $endpoint = $endpoint.'limit='.$example['limit'];
         }
 
         $I->sendGET($endpoint);
@@ -493,6 +492,7 @@ class SalesCest
         $response = json_decode($I->grabResponse(),true);
       
         $I->seeResponseContainsJson(array($example['field']=>$example['value']));
+
         $I->seeResponseMatchesJsonType([
            'data'=> 'array',
            'links'=>'array',
@@ -500,57 +500,185 @@ class SalesCest
         ]);
     }
 
-    protected function SucessListaVendasProvider(){
+    protected function FiltroVendasProvider(){
         return [
-            ['filtro'=>'amount','field'=>'total','value'=>'100'],
-            ['filtro'=>'amount','field'=>'currency','value'=>'BRL'],
-            ['filtro'=>'amount','field'=>'shipping','value'=>'22'],
-            ['filtro'=>'amount','field'=>'subtotal','value'=>'78'],
+            ['message'=>'amount total','filtro'=>'amount','field'=>'total','value'=>'101.5'],
+            ['message'=>'amount currency','filtro'=>'amount','field'=>'currency','value'=>'BRL'],
+            ['message'=>'amount shipping','filtro'=>'amount','field'=>'shipping','value'=>'22.75'],
+            ['message'=>'amount subtotal','filtro'=>'amount','field'=>'subtotal','value'=>'78.75'],
 
-            ['filtro'=>'customer','field'=>'name','value'=>'NOME DO REMETENTE'],
-            ['filtro'=>'customer','field'=>'email','value'=>'email@remetente.com'],
-            ['filtro'=>'customer','field'=>'phone','value'=>'5555555555555'],
-            ['filtro'=>'customer','field'=>'document','value'=>'05392258000'],
-            ['filtro'=>'customer','field'=>'state_register','value'=>'496017223297'],
-            ['filtro'=>'customer','field'=>'company_document','value'=>'52065016000186'],
+            ['message'=>'customer name','filtro'=>'customer','field'=>'name','value'=>'NOME DO REMETENTE'],
+            ['message'=>'customer email','filtro'=>'customer','field'=>'email','value'=>'email@remetente.com'],
+            ['message'=>'customer phone','filtro'=>'customer','field'=>'phone','value'=>'5555555555555'],
+            ['message'=>'customer document','filtro'=>'customer','field'=>'document','value'=>'05392258000'],
+            ['message'=>'customer state_register','filtro'=>'customer','field'=>'state_register','value'=>'496017223297'],
+            ['message'=>'customer company_document','filtro'=>'customer','field'=>'company_document','value'=>'52065016000186'],
             
 
-            ['filtro'=>'receiver','field'=>'name','value'=>'NOME DO RECEBEDOR'],
-            ['filtro'=>'receiver','field'=>'email','value'=>'email@recebedor.com'],
-            ['filtro'=>'receiver','field'=>'phone','value'=>'555555555555'],
-            ['filtro'=>'receiver','field'=>'document','value'=>'11569765022'],
-            ['filtro'=>'receiver','field'=>'company_document','value'=>'01051781000106'],
-            ['filtro'=>'receiver','field'=>'state_register','value'=>'921464459226'],
+            ['message'=>'receiver name','filtro'=>'receiver','field'=>'name','value'=>'NOME DO RECEBEDOR'],
+            ['message'=>'receiver email','filtro'=>'receiver','field'=>'email','value'=>'email@recebedor.com'],
+            ['message'=>'receiver phone','filtro'=>'receiver','field'=>'phone','value'=>'555555555555'],
+            ['message'=>'receiver document','filtro'=>'receiver','field'=>'document','value'=>'11569765022'],
+            ['message'=>'receiver company_document','filtro'=>'receiver','field'=>'company_document','value'=>'01051781000106'],
+            ['message'=>'receiver state_register','filtro'=>'receiver','field'=>'state_register','value'=>'921464459226'],
 
 
-            ['filtro'=>'invoice','field'=>'key','value'=>'47537041097716550376222662273547431779550849'],
-            ['filtro'=>'invoice','field'=>'serie','value'=>'395'],
-            ['filtro'=>'invoice','field'=>'value','value'=>'1573'],
-            ['filtro'=>'invoice','field'=>'number','value'=>'424'],
-            ['filtro'=>'invoice','field'=>'issued_at','value'=>'1987-08-07'],
+            ['message'=>'invoice key','filtro'=>'invoice','field'=>'key','value'=>'47537041097716550376222662273547431779550849'],
+            ['message'=>'invoice serie','filtro'=>'invoice','field'=>'serie','value'=>'395'],
+            ['message'=>'invoice value','filtro'=>'invoice','field'=>'value','value'=>'1573'],
+            ['message'=>'invoice number','filtro'=>'invoice','field'=>'number','value'=>'424'],
+            ['message'=>'invoice issued_at','filtro'=>'invoice','field'=>'issued_at','value'=>'1987-08-07'],
 
-            // // ['filtro'=>'tracking','field'=>'{field}','value'=>'{value}'],
-            // // ['filtro'=>'shipping','field'=>'{field}','value'=>'{value}'],
-            // // ['filtro'=>'historics','value'=>'true'],
-            // ['filtro'=>'created-between','old'=>'2019-07-29 20:06:05','new'=>'2019-07-31 23:06:05'],
-            // ['filtro'=>'updated-between','old'=>'2018-07-29 20:06:05','new'=>'2025-07-30 23:06:05'],
-            // // // ['filtro'=>'has-shipping','value'=>'true'], // falso
-            // ['filtro'=>'account','value'=>'7999e5fe-a6bf-4757-9feb-9ad513e2a0ea'],
-            // ['filtro'=>'client','value'=>'2'],
+            // ['filtro'=>'tracking','field'=>'{field}','value'=>'{value}'], TODO
             
-            // ['filtro'=>'status','value'=>'created'],
-            // ['filtro'=>'status','value'=>'archived'],
-            // ['filtro'=>'status','value'=>'canceled'],
-            // ['filtro'=>'status','value'=>'deleted'],
-            // ['sort'=>'id'],
-            // ['sort'=>'created_at'],
-            // ['sort'=>'updated_at'],
-            // ['sort'=>'deleted_at'],
-
-            // ['limit'=>'{1}']
+            // ['filtro'=>'historics','value'=>'true'], // TODO
+            // ['filtro'=>'created-between','old'=>'2019-07-29 20:06:05','new'=>'2025-07-31 23:06:05'], //TESTAR MANUALMENTE
+            // ['filtro'=>'updated-between','old'=>'2018-07-29 20:06:05','new'=>'2025-07-30 23:06:05'], //TESTAR MANUALMENTE
+            // // ['filtro'=>'has-shipping','value'=>'true'], // TODO
+            // ['filtro'=>'account','value'=>'7999e5fe-a6bf-4757-9feb-9ad513e2a0ea'], //TODO
+              
         ];
     }
 
+
+
+    /**
+    * @dataprovider FiltroClientIdProvider
+    * @after DeleteAllSales
+    */
+    public function FiltroClientId(ApiTester $I,\Codeception\Example $example){
+
+        $I->wantTo('Verifica filtro Client '. $example['message']);
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('Accept', 'application/json');
+        $I->amBearerAuthenticated($this->BearerToken);
+
+        $this->sales_request[0]['client_id'] = '1';
+        $I->sendPOST($this->cadastrar_endpoint,$this->sales_request);
+        $I->seeResponseCodeIsSuccessful();
+
+        //cria venda sem historics
+        $this->sales_request[0]['client_id'] = '2';
+        $I->sendPOST($this->cadastrar_endpoint,$this->sales_request);
+        $I->seeResponseCodeIsSuccessful();
+
+        $endpoint = $this->consultar_all_endpoint.'?filter[client]='.$example['client'];
+
+        $I->sendGET($endpoint);
+        $I->seeResponseCodeIsSuccessful();
+
+        $I->seeResponseContainsJson(array('client_id'=>$example['client']));
+        $I->dontSeeResponseContainsJson(array('client_id'=>$example['wrong_client']));
+    }
+
+    protected function FiltroClientIdProvider(){
+        return [
+            ['message'=>'client [1,2]','client'=>'1','wrong_client'=>'2'],
+            ['message'=>'client [2,1]','client'=>'2','wrong_client'=>'1'],
+        ];
+    }
+    
+
+
+    /**
+    * @dataprovider FiltroStatusProvider
+    * @after DeleteAllSales
+    */
+    public function FiltroStatus(ApiTester $I,\Codeception\Example $example){
+
+        $I->wantTo("Verifica se filtrou status");
+
+        //cadastra duas compras, uma com 1 status e outra com outro diferente
+        $endpoint = $this->consultar_all_endpoint.'?sort='.$example['status'];
+
+        $I->CriaVendaComStatus($I,$this->sales_request,$example['status'],$this->cadastrar_endpoint);
+        $I->CriaVendaComStatus($I,$this->sales_request,$example['wrong_status'],$this->cadastrar_endpoint);
+        $I->CriaVendaComStatus($I,$this->sales_request,$example['wrong_status2'],$this->cadastrar_endpoint);
+        $I->CriaVendaComStatus($I,$this->sales_request,$example['wrong_status3'],$this->cadastrar_endpoint);
+        //Lança consulta com filtro
+
+        $endpoint = $this->consultar_all_endpoint.'?filter[status]='.$example['status'];
+
+        $I->sendGET($endpoint);
+        $I->seeResponseCodeIsSuccessful();
+
+        $I->seeResponseContainsJson(array('status'=>$example['status']));
+        $I->dontSeeResponseContainsJson(array('status'=>$example['wrong_status']));
+        $I->dontSeeResponseContainsJson(array('status'=>$example['wrong_status2']));
+        $I->dontSeeResponseContainsJson(array('status'=>$example['wrong_status3']));
+
+        //Verifica somente 1 status
+    }
+
+    protected function FiltroStatusProvider(){
+       return [
+            ['status'=>'created' ,'wrong_status'=>'archived','wrong_status2'=>'canceled','wrong_status3'=>'deleted'],
+            ['status'=>'archived','wrong_status'=>'created' ,'wrong_status2'=>'canceled','wrong_status3'=>'deleted'],
+            ['status'=>'canceled','wrong_status'=>'created' ,'wrong_status2'=>'archived','wrong_status3'=>'deleted'],
+            ['status'=>'deleted' ,'wrong_status'=>'created' ,'wrong_status2'=>'archived','wrong_status3'=>'canceled'],
+       ];
+    }
+
+    /**
+    * @before CadastrarVenda
+    * @before CadastrarVenda2
+    * @dataprovider FiltroSortProvider
+    * @after DeleteAllSales
+    */
+    public function FiltroSort(ApiTester $I,\Codeception\Example $example){
+
+        $I->wantTo("Verifica se a ordenação está correta");
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('Accept', 'application/json');
+        $I->amBearerAuthenticated($this->BearerToken);
+
+        $endpoint = $this->consultar_all_endpoint.'?sort='.$example['sort'];
+
+        $I->sendGET($endpoint);
+        $I->seeResponseCodeIsSuccessful();
+
+        $vendas = json_decode($I->grabResponse(),true);
+
+        $I->assertGreaterThanOrEqual($vendas['data'][0][$example['sort']],$vendas['data'][1][$example['sort']]);
+    }
+
+    protected function FiltroSortProvider(){
+        return [
+            ['sort'=>'id'],
+            ['sort'=>'created_at'],
+            ['sort'=>'updated_at'],
+            ['sort'=>'deleted_at'],
+        ];
+    }
+
+    /**
+    * @before CadastrarVenda
+    * @before CadastrarVenda2
+    * @dataprovider LimitProvider
+    */
+    public function Limit(ApiTester $I,\Codeception\Example $example){
+
+        $I->wantTo("Verifica limite de vendas");
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('Accept', 'application/json');
+        $I->amBearerAuthenticated($this->BearerToken);
+
+        $I->sendGET($this->consultar_all_endpoint);
+        $I->seeResponseCodeIsSuccessful();
+
+        $resposta = json_decode($I->grabResponse(),true);
+        $I->assertEquals($resposta['meta']['from'],$example['limit']);
+        $I->assertLessThanOrEqual($resposta['meta']['total'],$example['limit']);
+    }
+
+    protected function LimitProvider(){
+        return [
+            ['limit'=>1],
+        ];
+    }
 
     /**
     * @dataprovider FailListaVendasProvider
@@ -635,17 +763,15 @@ class SalesCest
             ['filtro'=>'invoice','field'=>'number','value'=>'423'],
             ['filtro'=>'invoice','field'=>'issued_at','value'=>'1987-08-06'],
 
+            //TODO testes fails dos filtros
             // // ['filtro'=>'tracking','field'=>'{field}','value'=>'{value}'],
             // // ['filtro'=>'shipping','field'=>'{field}','value'=>'{value}'],
             // // ['filtro'=>'historics','value'=>'true'],
-            ['filtro'=>'created-between','old'=>'2039-07-31 20:06:05','new'=>'2020-07-30 23:06:05'],
-            ['filtro'=>'updated-between','old'=>'2001-07-29 20:06:05','new'=>'2019-07-28 23:06:05'],
-            // // ['filtro'=>'has-shipping','value'=>'true'], // falso
-            ['filtro'=>'account','value'=>'6999e5fe-a6bf-4757-9feb-9ad513e2a0ea'],
-            ['filtro'=>'client','value'=>'222'],
-            // // ['filtro'=>'status','value'=>'{created,available,unavailable,canceled,deleted}'],
-            // ['sort'=>'_at'],
-            // ['limit'=>'{1}']
+            // ['filtro'=>'created-between','old'=>'2039-07-31 20:06:05','new'=>'2020-07-30 23:06:05'],
+            // ['filtro'=>'updated-between','old'=>'2001-07-29 20:06:05','new'=>'2019-07-28 23:06:05'],
+            // // // ['filtro'=>'has-shipping','value'=>'true'], //
+            // ['filtro'=>'account','value'=>'6999e5fe-a6bf-4757-9feb-9ad513e2a0ea'],
+            // ['filtro'=>'client','value'=>'222'],
         ];
     }
 
@@ -653,7 +779,7 @@ class SalesCest
 
     public function DeleteAllSales(ApiTester $I){
 
-              $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('Accept', 'application/json');
         $I->amBearerAuthenticated($this->BearerToken);
 
