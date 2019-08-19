@@ -621,8 +621,6 @@ class SalesCest
     }
 
     /**
-    * @before CadastrarVenda
-    * @before CadastrarVenda2
     * @dataprovider FiltroSortProvider
     * @after DeleteAllSales
     */
@@ -634,6 +632,12 @@ class SalesCest
         $I->haveHttpHeader('Accept', 'application/json');
         $I->amBearerAuthenticated($this->BearerToken);
 
+        $I->CriarVenda($I,$this->sales_request,$this->cadastrar_endpoint);
+        sleep(2);
+        $I->CriarVenda($I,$this->sales_request,$this->cadastrar_endpoint);
+        sleep(2);
+        $I->CriarVenda($I,$this->sales_request,$this->cadastrar_endpoint);
+        
         $endpoint = $this->consultar_all_endpoint.'?sort='.$example['sort'];
 
         $I->sendGET($endpoint);
@@ -641,7 +645,8 @@ class SalesCest
 
         $vendas = json_decode($I->grabResponse(),true);
 
-        $I->assertGreaterThanOrEqual($vendas['data'][0][$example['sort']],$vendas['data'][1][$example['sort']]);
+        $I->assertGreaterThanOrEqual($vendas['data'][2][$example['sort']],$vendas['data'][1][$example['sort']]);
+        $I->assertGreaterThanOrEqual($vendas['data'][1][$example['sort']],$vendas['data'][0][$example['sort']]);
     }
 
     protected function FiltroSortProvider(){
