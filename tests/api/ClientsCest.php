@@ -11,8 +11,8 @@ class ClientsCest
 
     public function _before(ApiTester $I){
 
-        $this->BearerToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk3YzliNDAwZTAxOWE0ZmJjOTkyYjJkMDBkNWE5ZGYwY2I1MDJkYWQ5OTlhNTNhMTZjMTVkNGJlMjg5ZTRhNmU3NGVkZmIxZDNkMjBmN2IyIn0.eyJhdWQiOiIxIiwianRpIjoiOTdjOWI0MDBlMDE5YTRmYmM5OTJiMmQwMGQ1YTlkZjBjYjUwMmRhZDk5OWE1M2ExNmMxNWQ0YmUyODllNGE2ZTc0ZWRmYjFkM2QyMGY3YjIiLCJpYXQiOjE1NjYzMTExODAsIm5iZiI6MTU2NjMxMTE4MCwiZXhwIjoxNTk3OTMzNTgwLCJzdWIiOiJmMDg4MDExZi1lNzZjLTQzOWQtYjYzNC01OWQ1MGNlYjBiNWUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.yphVmaWmIyIGgwItdsnpqx5xaQh7_LuR2GtC1BuW2G0XsieLSRp6oyA7FEKcU-oUFtagQgeDjRE_ozQfh9L8pvSXTGAwspWgTJW3CQyuxUveHYeF3zKtiXES7ZJerRTgBNob0VsRouz3t90Ve6kbSnPOndf3hhFKZ1JNdJFrehzoypdSjQ4WGDLa7SKnXOGqIvpqTirHDyaEwN7zqWOA_yR6XuzBRFG7inn52G_voxsTgFVWNsT1I0N0DHLwP1qyVrsVbKE-7tF1uj-QAx8g2JBxMVidlOagbJiq_FR41lACZOf4ryHayZwWIoRomlKkOp0tbsk65CB5vpIq2e9GHPdwsKbgXCYRdUqLckkosy6qqEkKfwWgKw-CcRpX3cpWLe27w2-zw1alwlUibEkXSKimsloFLmK9lf_muyjXNh0p9pBzEuifEFP5BniRjPOkS-nKS7MwMoH5zYNDkwEQ1cHCAXUz0MctjNMkYqPb8o8zIiNijRHDBuOkFfmlEdJGFVSAXO9j1OpZbRGznwVQcMUAx1Mhg3h0_kcy5yNMgsr9O5XdgoczilmCSPd5d_Tt7pCGutdW-HADWILGo3dJuhimz3Yltl1oB0oZvlP8LFimY1yIpIZ4UBFACEj2p5G8D8c00GAFM7YPEL1hZCHsYUqBE_BDnrvVK_gn4F9xf5U';
-      
+        $this->BearerToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjYzNmRlZDc3M2RkYmU1NWE1ZTRhZTEzYjhmZjdlNjk1NzNiZTJhNjNiZjVlNzk4ZDFiYzlhNWNjMzg2OTc2MmQ1YWJhYzE0OTcyYWVmYzg5In0.eyJhdWQiOiIxIiwianRpIjoiNjM2ZGVkNzczZGRiZTU1YTVlNGFlMTNiOGZmN2U2OTU3M2JlMmE2M2JmNWU3OThkMWJjOWE1Y2MzODY5NzYyZDVhYmFjMTQ5NzJhZWZjODkiLCJpYXQiOjE1NjY5MTI2MzAsIm5iZiI6MTU2NjkxMjYzMCwiZXhwIjoxNTk4NTM1MDMwLCJzdWIiOiJmMDg4MDExZi1lNzZjLTQzOWQtYjYzNC01OWQ1MGNlYjBiNWUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.BEVNDgfQNM83asZJKzRZPojh3sAKTfaXI6Y1xl8tC0JTJiopIvkAJEmUjHIgmqrDjGetO4dJKES4fbqM3rjLV9bHxG-OEqPJnVY3jOY0Yr0O1HCt9fQGXBzJLx33NIhVCSTokXPSU917ABEgZRt-hH2dgMeVAE2yhCpAKzlHDBozp512STKxNkghZufFVreB11QdZIv35t8iO8cey14KgWUblNSNTAJCiCoOrDs6-HRkQNM5dqJkSOX7FuNhET7OEs43t4eEu8pPcJmDu7ecWwKO46h1Ui6Uj2_i6NJArTBT5j2u5n3mzZ5IubNMN91rFF8PxSEbhQUHmN2l7nP3t15-FkUMi6fnEU_hJd3n1xL2OZkztnMawW3NqbaRU2rHsPHRwk5xPjLFsG_aDjz2ve3UdPjOmn1sScIlL4U9Mzdej4cQXTCyhI8Gd-3x2yCgg-JN607CU8I3RC7lrkVv1dVhxYamw1RkEmd5lQZ7qRPaMIA3R1g0FJduKyRWvyC9LYt3jljU2Ve2tBbPTOVix_zce7BTaSOontGimdh78uDh3v2VwpG7ACsy_wojJ7iG0s7CueHpaPE9YLPXPT89b-FGLqaj6Hz8bU8OB6GFPcbmWPXymT1AVeEhmeYEjiBD3cn2__dCIWSMiDUS6r0Vz6QG744GO7fLtS2ZJStW6gQ';
+        
         $this->create_clients_request = [
             'own_id' => '999128',
             'name' => "Shopping Online",
@@ -77,7 +77,7 @@ class ClientsCest
     }
 
 
-    public function CreateClient(ApiTester $I){
+    public function CreateClientContract(ApiTester $I){
 
         $I->wantTo("Cadastrar Clientes");
 
@@ -113,6 +113,7 @@ class ClientsCest
         $I->assertEquals($this->create_clients_request['url'],$response['data']['url']);
   
         Fixtures::add('Client',$response);
+
 
         $this->past_response = $response;
     }
@@ -192,7 +193,7 @@ class ClientsCest
 
 
     /**
-    * @before CreateClient
+    * @before CreateClientContract
     */
     public function CheckClientById(ApiTester $I){
 
@@ -201,8 +202,9 @@ class ClientsCest
         $this->check_clients_endpoint = '/clients';
 
         $ClienteCriado = Fixtures::get('Client');
+
+
         $endpoint = $this->check_clients_endpoint.'/'.$ClienteCriado['data']['id'];
-        // $endpoint = $this->check_clients_endpoint.'/'.$this->past_response['data']['id'];
 
         $I->sendGET($endpoint);
         $I->seeResponseCodeIsSuccessful();
@@ -228,12 +230,4 @@ class ClientsCest
         $I->seeResponseContainsJson(array('id'=>$ClienteCriado['data']['id']));
     }
 
-    public function TesteFixtures(ApiTester $I){
-
-        Fixtures::add('user1',['name' => 'davert']);
-        $user1 = Fixtures::get('user1');
-        var_dump($user1);
-        var_dump(Fixtures::exists('user1'));
-
-    }
 }
