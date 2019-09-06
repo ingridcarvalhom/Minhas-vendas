@@ -1,37 +1,63 @@
 <?php 
 
+use Codeception\Util\Fixtures;
+
 class SalesCest
 {
 
-    protected $sales_request;
-
-    protected $cadastrar_endpoint;
-    protected $atualizar_endpoint;
-    protected $consultar_endpoint;
-    protected $todas_permissoes4;
-    protected $past_id;
-    protected $aux_id;
-
+    protected $salesRequest;
+    protected $salesEndpoint;
     protected $TodasPermissoes;
 
-    public function _before(){
+    protected function createClient(ApiTester $I){
 
-        $this->BearerToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjkwMTQ0YTM1ZjAwNjFlYmJmNDllZDJlYTIzNmUyNDc4ZDIxNWI4OGJhZmY4YmQ3NDAyZjA4MTVmNWMyMjk1M2I1ODI2YmE1MTIyYjgyMmVjIn0.eyJhdWQiOiIxIiwianRpIjoiOTAxNDRhMzVmMDA2MWViYmY0OWVkMmVhMjM2ZTI0NzhkMjE1Yjg4YmFmZjhiZDc0MDJmMDgxNWY1YzIyOTUzYjU4MjZiYTUxMjJiODIyZWMiLCJpYXQiOjE1NjQxNjk0ODIsIm5iZiI6MTU2NDE2OTQ4MiwiZXhwIjoxNTk1NzkxODgyLCJzdWIiOiJhNDJkMWIwYy01MjA1LTQyMWMtODRlZi01NWZiNjZiNjg0NGYiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.3jovoMjzOqp7CgrJFKqkfA5BUzj5EBrBG0PNH6RmrUhA1H5sBuY4GC9NCRml21ScfRsKkRGDA2jHhbeuW4XBZ9qVE-2p0lPHw-ykygmU2csmBKNYBO70Utfqyd9PRRPC3xi_jm20CLBf8B7o1fsmCEEVWLBhQZz6SkKqbzbpAgsd0qEj5LWaIIS3dONu0KXo1pdU6liw27WYfrwZA7MIpILCkfSN9-4m40UotGVefU5dwiALYD_QUoAPfMZe9AvD0v9KorDQnsKrzJBvOIUy1zwEPV7tvLfpyRDhQU_OKslaahr45kX65ZMUZYOK3U50NA7nAr_wyyegNBGj3j2CoVwl-CXTWQSQkqjzltTF8YX3-kcr4vjP29fwN22QkxVVh_izREQJjF409MbiWVEBkYf-6N6DyL4h3vvOfJcZE2V4G0EVLAgUI7H1kKUkr37QKYhaJVkoLKrc8g_5nqedHQOt8LD5G5RSgiYnFfuosdLrFcE0FFgTToKfNHyfiNq61utwx2Pi7md5aY0XRRxzqdqPT4gqWpPSfG0_XyqE2htamWoXfwLIHBIyQufp8TAcpTolxpH8ANEyjE5jHNwb3sv0vpmhk5ks4AOGkftZlk7YYnupmPLDYhMWTp1Gr7Vq6AQ7JqrFJvMmMeE43mN00pPw1QH3sLEnHi5oVjweQ4s';
+        $clientsEndpoint = '/clients';
+        $createClientRequest = [
+            'own_id' => '999128',
+            'name' => "Shopping Online",
+            'url' => "https://www.loja.com",
+            'email' => 'email@daloja.com',
+            'document' => '87620890000112',
+            'address' => [
+                'postal_code'=> '96020150',
+                'street' => 'Rua X',
+                'number' => '123',
+                'complement' => 'Sala X',
+                'district' => 'Bairro',
+                'city' => 'Pelotas',
+                'state' => 'RS'
+            ],
+        ];
+        $createClientRequest['own_id'] = strval(rand(0,1000000));
         
-        $this->cadastrar_endpoint = '/sales';
-        $this->atualizar_endpoint = '/sales/';
-        $this->consultar_endpoint = '/sales/';
-        $this->consultar_filtro_endpoint = '/sales?';
-        $this->consultar_all_endpoint = '/sales';
-        $this->deletar_endpoint = '/sales/';
+        $I->sendPOST($clientsEndpoint,$createClientRequest);
+        $I->seeResponseCodeIsSuccessful();
 
-     
-        $this->sales_request = [[
-            "own_id"=> "IDENTIFICADOR-DA-VENDA-NO-INTEGRADOR",
+        $response = json_decode($I->grabResponse(),true);
+
+        return $response;
+    }
+
+    public function _before(ApiTester $I){
+
+        //Cuidado com client_id pode ser que vc tenha que modifica-lo, e token, pode ser que tenha que criar um novo
+
+        $this->tokenFromUserA = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjllYThiYzViNTUxMzFhODY5NDE1OTk5ZTc0M2Q3MzA0ZGM5MDYwYzY4ZTU5ZTY2YzNkNjkwODIzNTQ5MGNlOGMxNjk1YTRkZDIxMzNkMGI2In0.eyJhdWQiOiIxIiwianRpIjoiOWVhOGJjNWI1NTEzMWE4Njk0MTU5OTllNzQzZDczMDRkYzkwNjBjNjhlNTllNjZjM2Q2OTA4MjM1NDkwY2U4YzE2OTVhNGRkMjEzM2QwYjYiLCJpYXQiOjE1Njc2OTI3ODMsIm5iZiI6MTU2NzY5Mjc4MywiZXhwIjoxNTk5MzE1MTgzLCJzdWIiOiJmMDg4MDExZi1lNzZjLTQzOWQtYjYzNC01OWQ1MGNlYjBiNWUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.YfsdDGswyxmNM3bUDoEA7B1zxYoi4oKXb_rKuLM1EUX2AwVeZSDpMw_YLtCccORgO4z4C2jZYoz2BUxFo-weilzGnU2jtWo2nKC_UpytBRBnSVOE1Y2KYiIE78FtZQ53IOnaxnajmNDa57B1xKPZ3mzNnQwr3cGXylGk7jlu_qNxzpPA5jO7vJIJeRgwXf04_Vs-WgaNLrmRbdX2ebp27xZMt2T-p8L9VIWETGwwp_btZ6ICwdBLysaWk4NLCPgFtNxENFRotHAELL4x1FSpF59E1E7y8qCkBHKswREl7g2IMpl8Z9c8Aru3YZIoYL-PukjRy539qBetMloOq98zBLO49Jc8r4ZfG65V3h3np4kgRzW-vjWVbUciN7sgEbijCw_622zgsf0p5FoTzc7rH8JUQHKwsTotThjEfPNWJmPXiGhwYcx_fHOx3MYh7G_nmGOjA6MU3OyEfmGsWotHSf4ipc-e0N-t_o_gSZttSRKPuX3S-_4OFyKSBbBwBFjjd1OySxQhhhCySvx2JOHfrKPmHfVSm2AYNQvp1OKa7AaMzT3_ofV9OhTpJaev0o1iQuA_ofEsFlzBPVECHDKn4AtmmgdvD7ZOhOuy8rvXWIgWCpQY0dyzGxG4-6ATNqLQsvhkwefOLgldqPGEOpSxwza3yxUU5CO10XB2DUEHwjE';
+        $this->tokenFromUserB = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQzYTJhYzQ4N2E5ZWFlYWNmZmFkNzkxZmU0ZjhmY2ViOGE4ZWFiOTEzODc0ZjMyYjZmYmM1MDQ0NThmZDBkZTk0MWYxZTIwMWFmMWY4YWVkIn0.eyJhdWQiOiIxIiwianRpIjoiZDNhMmFjNDg3YTllYWVhY2ZmYWQ3OTFmZTRmOGZjZWI4YThlYWI5MTM4NzRmMzJiNmZiYzUwNDQ1OGZkMGRlOTQxZjFlMjAxYWYxZjhhZWQiLCJpYXQiOjE1Njc3MDUxOTgsIm5iZiI6MTU2NzcwNTE5OCwiZXhwIjoxNTk5MzI3NTk4LCJzdWIiOiIyMDM5Zjk1My0wNjNjLTQ3MjctYTQ4ZC0xMjQzNTI4M2UyOGUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.Uhi3uNyBvxx0QAmPsJLJ7NzUFtYasag8UuzwcKFnmcAVlulUWgqV5QCL2TbYHgTi9OcD49Gri8TE-RpvFS1pYnu-6j6gLd8qarnkm9mL58_LFZ7f5cMq_cOEJFQbEgwykTIMMd6z-4iebxFbJ4kM_v8qqKaZugSpb74au6g6IKot46KFEPOvfZ3PgUTC-jIDkyal-m8v_QorXpb1zUUYkEidt_8fwHTbSwW78W_b8brkJILipRqGdNYQe-yA1d7ERBRLh6Po2jtr0tA6VwZN2xXkG9AX957wpy50eO4qGYRCoEtUFoeGSyfVmrC1THy_PbspI8Rt77F_wcPLiIAJnac2h7Um-h1VOHPvD3YLAziMJkYtVJ34c8kziT6Tw2RZrscWq2WoKqIuyZlSkF8qhcslu3t3OXRIiwOvpAV_6--HVVEXUIF_yzOua9RGDiguuXCwuxxk9fhmltKUq7sQ0I2_ehp90RWiQs6gUIA_iQwFtfkp_7_eenrXVdE_8ArLD1EhqP8ZlVZ1GjjN8dbrObFHNpPsCrokivXXyUJN6VWkFrdt2AaD03dz_kH3gYDTgiXtfjU-YRGH8IXYHmCuFsuU7qAsO5samx9Q_ieRKJDIeDw7sc2pqTraqHj5bJgOtdDwesGw-EZ219-pwaz1EBtFxxm9fij8DOxwpgMvrgc';
+
+        $this->salesEndpoint = '/sales';
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('Accept', 'application/json');
+        $I->amBearerAuthenticated($this->tokenFromUserA);
+
+        Fixtures::add('Client',$this->createClient($I));
+
+        $this->salesRequest = [[
+            "own_id"=> Fixtures::get('Client')['data']['own_id'],
             "own_url"=> "URL-DA-VENDA",
-            "status"=> "created",
-            "client_id"=> 1,
-            "customer"=> [
+            "client_id"=> Fixtures::get('Client')['data']['id'],
+            "sender"=> [
                 "name"=> "NOME DO REMETENTE",
                 "phone"=> "5555555555555",
                 "email"=> "email@remetente.com",
@@ -94,8 +120,7 @@ class SalesCest
                       "weight"=> 9.7,
                       "height"=> 12,
                       "width"=> 12,
-                      "length"=> 12,
-                      "diameter"=> null
+                      "length"=> 12
                     ]
                 ]
             ],
@@ -105,16 +130,15 @@ class SalesCest
                 "own_hand"=> true,
                 "collect"=> true,
                 "reverse"=> false,
-                "reminder"=> "at", // lembrete etiqueta
+                #"reminder"=> "at", // lembrete etiqueta
                 "platform"=> "King-Schroeder"
             ]
         ]];
 
-        $this->update_request = [
+        $this->updateRequest = [
             "user_id"=>"bcef61f7-21b2-3334-8d92-aa76af0fc7ee",
-            "own_id"=>"b8099c5d-8aa3-39c6-86ea-ad2ec25e24fa",
+            "own_id"=> Fixtures::get('Client')['data']['own_id'],
             "own_url"=>"http://shanahann.net/",
-            "status"=>"created",
             "client"=>[
                 "app_id"=>"1",
                 "order_id"=>null,
@@ -124,7 +148,7 @@ class SalesCest
                 "account_id"=>null,
                 "user_id"=>"243332d7-719f-4333-a269-7e08a933333a"
             ],
-            "customer"=>[
+            "sender"=>[
                 "name"=>"Elizabeth Kuvulis",
                 "phone"=>"1-694-697-2572",
                 "email"=>"phirthe@huels.com",
@@ -197,54 +221,30 @@ class SalesCest
         ];
     }
 
-    // public function _after(ApiTester $I){
 
-    //     $I->haveHttpHeader('Content-Type', 'application/json');
-    //     $I->haveHttpHeader('Accept', 'application/json');
-    //     $I->amBearerAuthenticated($this->BearerToken);
+    protected function DeleteSale(ApiTester $I){
 
-    //     $I->sendGET($this->consultar_all_endpoint);
-    //     $I->seeResponseCodeIsSuccessful();
+        $I->sendDELETE($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
 
-    //     $response = json_decode($I->grabResponse(),true);
-    //     $array_response = $response['data'];
-    //     foreach ($array_response as $value){
-
-    //         $I->sendDELETE($this->deletar_endpoint.$value['id']);
-    //     }
-    // }
-
-    protected function DeletarVenda(ApiTester $I){
-        
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $I->sendDELETE($this->deletar_endpoint.$this->aux_id);
         $I->seeResponseCodeIsSuccessful();
     }
 
-    public function CadastrarVenda(ApiTester $I){
+    public function CreateSale(ApiTester $I){
         
-        $I->wantTo("Cadastrar Venda");
         sleep(1);
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
        
-        $this->sales_request[0]['client_id'] = 1;
-        $this->sales_request[0]['own_id'] = strval(rand(0,10000));
+        $this->salesRequest[0]['client_id'] = 1;
+        $this->salesRequest[0]['own_id'] = strval(rand(0,10000));
 
-        $I->sendPOST($this->cadastrar_endpoint,$this->sales_request);
+        $I->sendPOST($this->salesEndpoint,$this->salesRequest);
         
         $I->seeResponseMatchesJsonType([
             'data'=>[
                 [
                     'own_id' => 'string',
                     'own_url' => 'string',
-                    'status' => 'string',
                     'client_id' => 'integer',
-                    'customer' => 'array',
+                    'sender' => 'array',
                     'receiver' => 'array',
                     'amount' => 'array',
                     'invoice' => 'array',
@@ -259,86 +259,58 @@ class SalesCest
             ]
         ]);
 
-        $I->seeResponseContainsJson(array('own_id'=>$this->sales_request[0]['own_id']));
-        $I->seeResponseContainsJson(array('own_url'=>$this->sales_request[0]['own_url']));
-        $I->seeResponseContainsJson(array('status'=>$this->sales_request[0]['status']));
-        $I->seeResponseContainsJson(array('client_id'=>$this->sales_request[0]['client_id']));
-        $I->seeResponseContainsJson(array('customer' =>$this->sales_request[0]['customer']));
-        $I->seeResponseContainsJson(array('receiver' =>$this->sales_request[0]['receiver']));
-        $I->seeResponseContainsJson(array('amount' =>$this->sales_request[0]['amount']));
-        $I->seeResponseContainsJson(array('invoice' =>$this->sales_request[0]['invoice']));
-        $I->seeResponseContainsJson(array('products' =>$this->sales_request[0]['products']));
-        $I->seeResponseContainsJson(array('options' =>$this->sales_request[0]['options']));
+        $I->seeResponseContainsJson(array('own_id'   =>$this->salesRequest[0]['own_id']));
+        $I->seeResponseContainsJson(array('own_url'  =>$this->salesRequest[0]['own_url']));
+        $I->seeResponseContainsJson(array('client_id'=>$this->salesRequest[0]['client_id']));
+        $I->seeResponseContainsJson(array('sender'   =>$this->salesRequest[0]['sender']));
+        $I->seeResponseContainsJson(array('receiver' =>$this->salesRequest[0]['receiver']));
+        $I->seeResponseContainsJson(array('amount'   =>$this->salesRequest[0]['amount']));
+        $I->seeResponseContainsJson(array('invoice'  =>$this->salesRequest[0]['invoice']));
+        $I->seeResponseContainsJson(array('products' =>$this->salesRequest[0]['products']));
+        $I->seeResponseContainsJson(array('options'  =>$this->salesRequest[0]['options']));
 
-        $response = json_decode($I->grabResponse(),true);
+        $saleCreated = json_decode($I->grabResponse(),true);
      
-        $this->aux_id = $response['data'][0]['id'];
-    }
-
-    protected function CadastrarVenda2(ApiTester $I){
-
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $this->sales_request[0]['client_id'] = 1;
-        $this->sales_request[0]['own_id'] = strval(rand(0,10000));
-
-        $I->sendPOST($this->cadastrar_endpoint,$this->sales_request);
+        Fixtures::add('Sale',$saleCreated);
     }
 
 
     /**
-    * @before CadastrarVenda
-    * @after DeletarVenda
+    * @before CreateSale
+    * @depends CreateSale
+    * @after DeleteSale
     */
-    public function AtualizarVenda(ApiTester $I){
+    public function UpdateSale(ApiTester $I){
 
-        $I->wantTo("Atualizar venda ".$this->aux_id);
+        $I->wantTo("Atualizar venda ".Fixtures::get('Sale')['data'][0]['id']);
 
         $faker = Faker\Factory::create();
 
-        $this->update_request['own_url'] = $faker->url;
+        $this->updateRequest['own_url'] = $faker->url;
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-        
-        //Atualizar endpoint
-        $endpoint = $this->atualizar_endpoint.$this->aux_id;
-
-        $I->sendPATCH($endpoint,$this->update_request);
+        $I->sendPATCH($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'],$this->updateRequest);
         $I->seeResponseCodeIsSuccessful();
 
-        //Consultar Endpoint
-        $this->consultar_endpoint = '/sales/';
-
-        $endpoint = $this->consultar_endpoint.$this->aux_id;
-        $I->sendGET($endpoint);
+        $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
         $I->seeResponseCodeIsSuccessful();
         $I->seeResponseMatchesJsonType([
             'data'=>'array'
         ]);
         
         $response = json_decode($I->grabResponse(),true);
-        $I->assertEquals($response['data']['own_url'],$this->update_request['own_url']);  
+        $I->assertEquals($response['data']['own_url'],$this->updateRequest['own_url']);  
     }
 
 
     /**
-     * @before CadastrarVenda
+    * @before CreateSale
+    * @depends CreateSale
     */
-    public function ConsultarVenda(ApiTester $I){
+    public function CheckSaleById(ApiTester $I){
 
-        $I->wantTo("Consultar Venda ".$this->aux_id);
+        $I->wantTo("Consultar Venda por ID".Fixtures::get('Sale')['data'][0]['id']);
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $endpoint = $this->consultar_endpoint.$this->aux_id;
-
-        $I->sendGET($endpoint);
+        $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
         $I->seeResponseCodeIsSuccessful();
 
         $I->seeResponseMatchesJsonType([
@@ -347,29 +319,9 @@ class SalesCest
                 'own_id'=>'string',
                 'user_id'=>'string',
                 'own_url'=>'string',
-                'status'=>'string',
                 'disabled'=>'integer',
+                'disabled'=> 'integer',
                 'client_id'=>'integer',
-                'customer'=>[
-                    'name'=>'string',
-                    'email'=>'string:email',
-                    'phone'=>'string',
-                    'address'=>[
-                        'city'=>'string',
-                        'name'=>'string',
-                        'notes'=>'string',
-                        'state'=>'string',
-                        'number'=>'string',
-                        'country'=>'string',
-                        'district'=>'string',
-                        'complement'=>'string',
-                        'state_abbr'=>'string',
-                        'postal_code'=>'string',
-                    ],
-                    'document'=>'string',
-                    'state_register'=>'string',
-                    'company_document'=>'string'
-                ],
                 'receiver'=>[
                     'name'=>'string',
                     'email'=>'string:email',
@@ -424,8 +376,33 @@ class SalesCest
                 'volumes' => 'null',
                 'created_at' => 'string',
                 'updated_at' => 'string',
-                'canceled_at' => 'null',
+               
                 'deleted_at' => 'null',
+
+
+                'sender'=>[
+                    'name'=>'string',
+                    'email'=>'string:email',
+                    'phone'=>'string',
+                    'address'=>[
+                        'city'=>'string',
+                        'name'=>'string',
+                        'notes'=>'string',
+                        'state'=>'string',
+                        'number'=>'string',
+                        'country'=>'string',
+                        'district'=>'string',
+                        'complement'=>'string',
+                        'state_abbr'=>'string',
+                        'postal_code'=>'string',
+                    ],
+                    'document'=>'string',
+                    'state_register'=>'string',
+                    'company_document'=>'string'
+                ],
+                'archived_at' => 'null|string',
+                'paid_at' => 'null|string',
+                'canceled_at' => 'null|string',
                 'client' => [
                     'id' => 'integer',
                     'app_id' => 'string',
@@ -437,12 +414,6 @@ class SalesCest
                         'own_hand' => 'boolean',
                         'services' => 'array',
                         'address_id' => 'integer',
-                        'dimensions' => [
-                            'width' => 'integer',
-                            'height' => 'integer',
-                            'length' => 'integer',
-                        ],
-                        'jadlog_agency' => 'integer',
                         'default_service' => 'string',
                         'insurance_value' => 'string'
                     ],
@@ -457,32 +428,27 @@ class SalesCest
 
 
     /**
-    * @dataprovider FiltroVendasProvider
-    * @before CadastrarVenda
-    * @after DeletarVenda
+    * @dataprovider CheckSalesFilterProvider
+    * @depends CreateSale
+   
     */
-    public function FiltroVendas(ApiTester $I, \Codeception\Example $example){
+    public function CheckSalesFilter(ApiTester $I, \Codeception\Example $example){
  
-        $I->wantTo("Verifica os filtros ".$example['message']);
+        $I->wantTo("Verifica os filters ".$example['message']);
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $endpoint = $this->consultar_filtro_endpoint;
+        $endpoint = $this->salesEndpoint.'?';
         
-        if(isset($example['filtro'])){
-
+        if(isset($example['filter'])){
 
             if(isset($example['field']) && isset($example['value'])){
-                $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['field'].','.$example['value'];
+                $endpoint = $endpoint.'filter['.$example['filter'].']='.$example['field'].','.$example['value'];
             } 
 
             if(isset($example['value']) && !isset($example['field'])){
-                $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['value'];
+                $endpoint = $endpoint.'filter['.$example['filter'].']='.$example['value'];
             }   
             if (isset($example['old']) && isset($example['new'])){
-                $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['old'].','.$example['new'];
+                $endpoint = $endpoint.'filter['.$example['filter'].']='.$example['old'].','.$example['new'];
             }
         }
 
@@ -500,156 +466,106 @@ class SalesCest
         ]);
     }
 
-    protected function FiltroVendasProvider(){
+    protected function CheckSalesFilterProvider(){
         return [
-            ['message'=>'amount total','filtro'=>'amount','field'=>'total','value'=>'101.5'],
-            ['message'=>'amount currency','filtro'=>'amount','field'=>'currency','value'=>'BRL'],
-            ['message'=>'amount shipping','filtro'=>'amount','field'=>'shipping','value'=>'22.75'],
-            ['message'=>'amount subtotal','filtro'=>'amount','field'=>'subtotal','value'=>'78.75'],
+            ['message'=>'amount total','filter'=>'amount','field'=>'total','value'=>'101.5'],
+            ['message'=>'amount shipping','filter'=>'amount','field'=>'shipping','value'=>'22.75'],
+            ['message'=>'amount subtotal','filter'=>'amount','field'=>'subtotal','value'=>'78.75'],
 
-            ['message'=>'customer name','filtro'=>'customer','field'=>'name','value'=>'NOME DO REMETENTE'],
-            ['message'=>'customer email','filtro'=>'customer','field'=>'email','value'=>'email@remetente.com'],
-            ['message'=>'customer phone','filtro'=>'customer','field'=>'phone','value'=>'5555555555555'],
-            ['message'=>'customer document','filtro'=>'customer','field'=>'document','value'=>'05392258000'],
-            ['message'=>'customer state_register','filtro'=>'customer','field'=>'state_register','value'=>'496017223297'],
-            ['message'=>'customer company_document','filtro'=>'customer','field'=>'company_document','value'=>'52065016000186'],
+            ['message'=>'sender name','filter'=>'sender','field'=>'name','value'=>'NOME DO REMETENTE'],
+            ['message'=>'sender email','filter'=>'sender','field'=>'email','value'=>'email@remetente.com'],
+            ['message'=>'sender document','filter'=>'sender','field'=>'document','value'=>'05392258000'],
+            ['message'=>'sender state_register','filter'=>'sender','field'=>'state_register','value'=>'496017223297'],
+            ['message'=>'sender company_document','filter'=>'sender','field'=>'company_document','value'=>'52065016000186'],
             
 
-            ['message'=>'receiver name','filtro'=>'receiver','field'=>'name','value'=>'NOME DO RECEBEDOR'],
-            ['message'=>'receiver email','filtro'=>'receiver','field'=>'email','value'=>'email@recebedor.com'],
-            ['message'=>'receiver phone','filtro'=>'receiver','field'=>'phone','value'=>'555555555555'],
-            ['message'=>'receiver document','filtro'=>'receiver','field'=>'document','value'=>'11569765022'],
-            ['message'=>'receiver company_document','filtro'=>'receiver','field'=>'company_document','value'=>'01051781000106'],
-            ['message'=>'receiver state_register','filtro'=>'receiver','field'=>'state_register','value'=>'921464459226'],
+            ['message'=>'receiver name','filter'=>'receiver','field'=>'name','value'=>'NOME DO RECEBEDOR'],
+            ['message'=>'receiver email','filter'=>'receiver','field'=>'email','value'=>'email@recebedor.com'],
+            ['message'=>'receiver document','filter'=>'receiver','field'=>'document','value'=>'11569765022'],
+            ['message'=>'receiver company_document','filter'=>'receiver','field'=>'company_document','value'=>'01051781000106'],
+            ['message'=>'receiver state_register','filter'=>'receiver','field'=>'state_register','value'=>'921464459226'],
 
 
-            ['message'=>'invoice key','filtro'=>'invoice','field'=>'key','value'=>'47537041097716550376222662273547431779550849'],
-            ['message'=>'invoice serie','filtro'=>'invoice','field'=>'serie','value'=>'395'],
-            ['message'=>'invoice value','filtro'=>'invoice','field'=>'value','value'=>'1573'],
-            ['message'=>'invoice number','filtro'=>'invoice','field'=>'number','value'=>'424'],
-            ['message'=>'invoice issued_at','filtro'=>'invoice','field'=>'issued_at','value'=>'1987-08-07'],
+            ['message'=>'invoice key','filter'=>'invoice','field'=>'key','value'=>'47537041097716550376222662273547431779550849'],
+            ['message'=>'invoice serie','filter'=>'invoice','field'=>'serie','value'=>'395'],
+            ['message'=>'invoice value','filter'=>'invoice','field'=>'value','value'=>'1573'],
+            ['message'=>'invoice number','filter'=>'invoice','field'=>'number','value'=>'424'],
+            ['message'=>'invoice issued_at','filter'=>'invoice','field'=>'issued_at','value'=>'1987-08-07'],
 
-            // ['filtro'=>'tracking','field'=>'{field}','value'=>'{value}'], TODO
+            // ['filter'=>'tracking','field'=>'{field}','value'=>'{value}'], TODO
             
-            // ['filtro'=>'historics','value'=>'true'], // TODO
-            // ['filtro'=>'created-between','old'=>'2019-07-29 20:06:05','new'=>'2025-07-31 23:06:05'], //TESTAR MANUALMENTE
-            // ['filtro'=>'updated-between','old'=>'2018-07-29 20:06:05','new'=>'2025-07-30 23:06:05'], //TESTAR MANUALMENTE
-            // // ['filtro'=>'has-shipping','value'=>'true'], // TODO
-            // ['filtro'=>'account','value'=>'7999e5fe-a6bf-4757-9feb-9ad513e2a0ea'], //TODO
+            // ['filter'=>'historics','value'=>'true'], // TODO
+            // ['filter'=>'created-between','old'=>'2019-07-29 20:06:05','new'=>'2025-07-31 23:06:05'], //TESTAR MANUALMENTE
+            // ['filter'=>'updated-between','old'=>'2018-07-29 20:06:05','new'=>'2025-07-30 23:06:05'], //TESTAR MANUALMENTE
+            // // ['filter'=>'has-shipping','value'=>'true'], // TODO
+            // ['filter'=>'account','value'=>'7999e5fe-a6bf-4757-9feb-9ad513e2a0ea'], //TODO
               
         ];
     }
 
 
-
     /**
-    * @dataprovider FiltroClientIdProvider
+    * @dataprovider FilterByClientIdProvider
     * @after DeleteAllSales
     */
-    public function FiltroClientId(ApiTester $I,\Codeception\Example $example){
+    public function FilterByClientId(ApiTester $I,\Codeception\Example $example){
 
-        $I->wantTo('Verifica filtro Client '. $example['message']);
+        $I->wantTo('Verifica filter Client '. $example['message']);
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $this->sales_request[0]['client_id'] = '1';
-        $I->sendPOST($this->cadastrar_endpoint,$this->sales_request);
+        $this->salesRequest[0]['client_id'] = '1';
+        $I->sendPOST($this->salesEndpoint,$this->salesRequest);
         $I->seeResponseCodeIsSuccessful();
 
-        //cria venda sem historics
-        $this->sales_request[0]['client_id'] = '2';
-        $I->sendPOST($this->cadastrar_endpoint,$this->sales_request);
+        $this->salesRequest[0]['client_id'] = '3';
+        $I->sendPOST($this->salesEndpoint,$this->salesRequest);
         $I->seeResponseCodeIsSuccessful();
 
-        $endpoint = $this->consultar_all_endpoint.'?filter[client]='.$example['client'];
+        $endpoint = $this->salesEndpoint.'?filter[client]='.$example['client'];
 
         $I->sendGET($endpoint);
-        $I->seeResponseCodeIsSuccessful();
 
+        $I->seeResponseCodeIsSuccessful();
         $I->seeResponseContainsJson(array('client_id'=>$example['client']));
         $I->dontSeeResponseContainsJson(array('client_id'=>$example['wrong_client']));
     }
 
-    protected function FiltroClientIdProvider(){
+    protected function FilterByClientIdProvider(){
         return [
-            ['message'=>'client [1,2]','client'=>'1','wrong_client'=>'2'],
-            ['message'=>'client [2,1]','client'=>'2','wrong_client'=>'1'],
+            ['message'=>'client [1,3]','client'=>'1','wrong_client'=>'3'],
+            ['message'=>'client [3,1]','client'=>'3','wrong_client'=>'1'],
         ];
     }
     
 
+    //TODO Não é possível alterar os status pela api.
+    //Logo pra testar os status é necessário manualmente alterar eles.
+    // FilterByStatus()
+
 
     /**
-    * @dataprovider FiltroStatusProvider
+    * @before CreateSale
+    * @before CreateSale
+    * @before CreateSale
+    * @dataprovider CheckFilterSortProvider
+    * @depends CreateSale
     * @after DeleteAllSales
     */
-    public function FiltroStatus(ApiTester $I,\Codeception\Example $example){
-
-        $I->wantTo("Verifica se filtrou status");
-
-        //cadastra duas compras, uma com 1 status e outra com outro diferente
-        $endpoint = $this->consultar_all_endpoint.'?sort='.$example['status'];
-
-        $I->CriaVendaComStatus($I,$this->sales_request,$example['status'],$this->cadastrar_endpoint);
-        $I->CriaVendaComStatus($I,$this->sales_request,$example['wrong_status'],$this->cadastrar_endpoint);
-        $I->CriaVendaComStatus($I,$this->sales_request,$example['wrong_status2'],$this->cadastrar_endpoint);
-        $I->CriaVendaComStatus($I,$this->sales_request,$example['wrong_status3'],$this->cadastrar_endpoint);
-        //Lança consulta com filtro
-
-        $endpoint = $this->consultar_all_endpoint.'?filter[status]='.$example['status'];
-
-        $I->sendGET($endpoint);
-        $I->seeResponseCodeIsSuccessful();
-
-        $I->seeResponseContainsJson(array('status'=>$example['status']));
-        $I->dontSeeResponseContainsJson(array('status'=>$example['wrong_status']));
-        $I->dontSeeResponseContainsJson(array('status'=>$example['wrong_status2']));
-        $I->dontSeeResponseContainsJson(array('status'=>$example['wrong_status3']));
-
-        //Verifica somente 1 status
-    }
-
-    protected function FiltroStatusProvider(){
-       return [
-            ['status'=>'created' ,'wrong_status'=>'archived','wrong_status2'=>'canceled','wrong_status3'=>'deleted'],
-            ['status'=>'archived','wrong_status'=>'created' ,'wrong_status2'=>'canceled','wrong_status3'=>'deleted'],
-            ['status'=>'canceled','wrong_status'=>'created' ,'wrong_status2'=>'archived','wrong_status3'=>'deleted'],
-            ['status'=>'deleted' ,'wrong_status'=>'created' ,'wrong_status2'=>'archived','wrong_status3'=>'canceled'],
-       ];
-    }
-
-    /**
-    * @dataprovider FiltroSortProvider
-    * @after DeleteAllSales
-    */
-    public function FiltroSort(ApiTester $I,\Codeception\Example $example){
+    public function CheckFilterSort(ApiTester $I,\Codeception\Example $example){
 
         $I->wantTo("Verifica se a ordenação está correta");
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $I->CriarVenda($I,$this->sales_request,$this->cadastrar_endpoint);
-        sleep(2);
-        $I->CriarVenda($I,$this->sales_request,$this->cadastrar_endpoint);
-        sleep(2);
-        $I->CriarVenda($I,$this->sales_request,$this->cadastrar_endpoint);
-        
-        $endpoint = $this->consultar_all_endpoint.'?sort='.$example['sort'];
+        $endpoint = $this->salesEndpoint.'?sort='.$example['sort'];
 
         $I->sendGET($endpoint);
         $I->seeResponseCodeIsSuccessful();
+       
+        $sales = json_decode($I->grabResponse(),true);
 
-        $vendas = json_decode($I->grabResponse(),true);
-
-        $I->assertGreaterThanOrEqual($vendas['data'][2][$example['sort']],$vendas['data'][1][$example['sort']]);
-        $I->assertGreaterThanOrEqual($vendas['data'][1][$example['sort']],$vendas['data'][0][$example['sort']]);
+        $I->assertGreaterThanOrEqual($sales['data'][1][$example['sort']],$sales['data'][2][$example['sort']]);
+        $I->assertGreaterThanOrEqual($sales['data'][0][$example['sort']],$sales['data'][1][$example['sort']]);
     }
 
-    protected function FiltroSortProvider(){
+    protected function CheckFilterSortProvider(){
         return [
             ['sort'=>'id'],
             ['sort'=>'created_at'],
@@ -659,53 +575,47 @@ class SalesCest
     }
 
     /**
-    * @before CadastrarVenda
-    * @before CadastrarVenda2
-    * @dataprovider LimitProvider
+    * @before CreateSale
+    * @before CreateSale
+    * @depends CreateSale
+    * @dataprovider CheckSalesLimitProvider
     */
-    public function Limit(ApiTester $I,\Codeception\Example $example){
+    public function CheckSalesLimit(ApiTester $I,\Codeception\Example $example){
 
         $I->wantTo("Verifica limite de vendas");
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $I->sendGET($this->consultar_all_endpoint);
+        $I->sendGET($this->salesEndpoint.'?limit='.$example['limit']);
         $I->seeResponseCodeIsSuccessful();
 
-        $resposta = json_decode($I->grabResponse(),true);
-        $I->assertEquals($resposta['meta']['from'],$example['limit']);
-        $I->assertLessThanOrEqual($resposta['meta']['total'],$example['limit']);
+        $response = json_decode($I->grabResponse(),true);
+        $I->assertEquals($response['meta']['to'],$example['limit']);
+        $I->assertLessThanOrEqual($response['meta']['total'],$example['limit']);
     }
 
-    protected function LimitProvider(){
+    protected function CheckSalesLimitProvider(){
         return [
             ['limit'=>1],
+            ['limit'=>2],
         ];
     }
 
     /**
-    * @dataprovider FailListaVendasProvider
+    * @dataprovider CheckFilterWithNoMatchingSalesProvider
     */
-    public function FailListaVendas(ApiTester $I, \Codeception\Example $example){
+    public function CheckFilterWithNoMatchingSales(ApiTester $I, \Codeception\Example $example){
  
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $endpoint = $this->consultar_filtro_endpoint;
+        $endpoint = $this->salesEndpoint.'?';
         
-        if(isset($example['filtro'])){
+        if(isset($example['filter'])){
 
             if(isset($example['field']) && isset($example['value'])){
-                $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['field'].','.$example['value'];
+                $endpoint = $endpoint.'filter['.$example['filter'].']='.$example['field'].','.$example['value'];
             } 
             if(isset($example['value']) && !isset($example['field'])){
-                $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['value'];
+                $endpoint = $endpoint.'filter['.$example['filter'].']='.$example['value'];
             }   
             if (isset($example['old']) && isset($example['new'])){
-                $endpoint = $endpoint.'filter['.$example['filtro'].']='.$example['old'].','.$example['new'];
+                $endpoint = $endpoint.'filter['.$example['filter'].']='.$example['old'].','.$example['new'];
             }
         }
     
@@ -739,64 +649,167 @@ class SalesCest
         ]);
     }
 
-    protected function FailListaVendasProvider(){
+    protected function CheckFilterWithNoMatchingSalesProvider(){
         return [
-            ['filtro'=>'amount','field'=>'total','value'=>'99'],
-            ['filtro'=>'amount','field'=>'currency','value'=>'USD'],
-            ['filtro'=>'amount','field'=>'shipping','value'=>'222'],
-            ['filtro'=>'amount','field'=>'subtotal','value'=>'780'],
+            ['filter'=>'amount','field'=>'total','value'=>'99'],
+            ['filter'=>'amount','field'=>'shipping','value'=>'222'],
+            ['filter'=>'amount','field'=>'subtotal','value'=>'780'],
 
-            ['filtro'=>'customer','field'=>'name','value'=>'NOME DO REMETENTEa'],
-            ['filtro'=>'customer','field'=>'email','value'=>'eemail@remetente.com'],
-            ['filtro'=>'customer','field'=>'phone','value'=>'5555555155555'],
-            ['filtro'=>'customer','field'=>'document','value'=>'25574405979'],
-            ['filtro'=>'customer','field'=>'company_document','value'=>'275211510780883'],
-            ['filtro'=>'customer','field'=>'state_register','value'=>'496117223297'],
+            ['filter'=>'sender','field'=>'name','value'=>'NOME DO REMETENTEa'],
+            ['filter'=>'sender','field'=>'email','value'=>'eemail@remetente.com'],
+            ['filter'=>'sender','field'=>'document','value'=>'25574405979'],
+            ['filter'=>'sender','field'=>'company_document','value'=>'275211510780883'],
+            ['filter'=>'sender','field'=>'state_register','value'=>'496117223297'],
             
 
-            ['filtro'=>'receiver','field'=>'name','value'=>'NOME DO RECEBEDORa'],
-            ['filtro'=>'receiver','field'=>'email','value'=>'eemail@recebedor.com'],
-            ['filtro'=>'receiver','field'=>'phone','value'=>'525555555555'],
-            ['filtro'=>'receiver','field'=>'document','value'=>'11569765021'],
-            ['filtro'=>'receiver','field'=>'state_register','value'=>'01086411415'],
-            ['filtro'=>'receiver','field'=>'company_document','value'=>'921264459226'],
+            ['filter'=>'receiver','field'=>'name','value'=>'NOME DO RECEBEDORa'],
+            ['filter'=>'receiver','field'=>'email','value'=>'eemail@recebedor.com'],
+            ['filter'=>'receiver','field'=>'document','value'=>'11569765021'],
+            ['filter'=>'receiver','field'=>'state_register','value'=>'01086411415'],
+            ['filter'=>'receiver','field'=>'company_document','value'=>'921264459226'],
 
 
-            ['filtro'=>'invoice','field'=>'key','value'=>'17537041097716550376222662273547431779550849'],
-            ['filtro'=>'invoice','field'=>'serie','value'=>'394'],
-            ['filtro'=>'invoice','field'=>'value','value'=>'1572'],
-            ['filtro'=>'invoice','field'=>'number','value'=>'423'],
-            ['filtro'=>'invoice','field'=>'issued_at','value'=>'1987-08-06'],
+            ['filter'=>'invoice','field'=>'key','value'=>'17537041097716550376222662273547431779550849'],
+            ['filter'=>'invoice','field'=>'serie','value'=>'394'],
+            ['filter'=>'invoice','field'=>'value','value'=>'1572'],
+            ['filter'=>'invoice','field'=>'number','value'=>'423'],
+            ['filter'=>'invoice','field'=>'issued_at','value'=>'1987-08-06'],
 
-            //TODO testes fails dos filtros
-            // // ['filtro'=>'tracking','field'=>'{field}','value'=>'{value}'],
-            // // ['filtro'=>'shipping','field'=>'{field}','value'=>'{value}'],
-            // // ['filtro'=>'historics','value'=>'true'],
-            // ['filtro'=>'created-between','old'=>'2039-07-31 20:06:05','new'=>'2020-07-30 23:06:05'],
-            // ['filtro'=>'updated-between','old'=>'2001-07-29 20:06:05','new'=>'2019-07-28 23:06:05'],
-            // // // ['filtro'=>'has-shipping','value'=>'true'], //
-            // ['filtro'=>'account','value'=>'6999e5fe-a6bf-4757-9feb-9ad513e2a0ea'],
-            // ['filtro'=>'client','value'=>'222'],
+            //TODO testes fails dos filters
+            // // ['filter'=>'tracking','field'=>'{field}','value'=>'{value}'],
+            // // ['filter'=>'shipping','field'=>'{field}','value'=>'{value}'],
+            // // ['filter'=>'historics','value'=>'true'],
+            // ['filter'=>'created-between','old'=>'2039-07-31 20:06:05','new'=>'2020-07-30 23:06:05'],
+            // ['filter'=>'updated-between','old'=>'2001-07-29 20:06:05','new'=>'2019-07-28 23:06:05'],
+            // // // ['filter'=>'has-shipping','value'=>'true'], //
+            // ['filter'=>'account','value'=>'6999e5fe-a6bf-4757-9feb-9ad513e2a0ea'],
+            // ['filter'=>'client','value'=>'222'],
         ];
     }
+
+    /** 
+    *@before CreateSale
+    * @depends CreateSale
+    */
+    public function ArchiveSale(ApiTester $I){
+
+        $I->wantTo("Arquivar a venda");
+
+        $I->sendPOST($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'].'/archive');
+        $I->seeResponseCodeIsSuccessful();
+        $I->seeResponseContainsJson(array('message'=>'Venda arquivada.'));
+
+        $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
+        $I->seeResponseContains('archived_at');
+        $I->dontSeeResponseContainsJson(array('archived_at'=>null));
+        
+    }
+
+    /** 
+    * @before CreateSale
+    * @depends CreateSale
+    */
+    public function CancelSaleWithSucess(ApiTester $I){
+
+        $I->wantTo("Cancelar a venda");
+
+        $I->sendPOST($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'].'/cancel');
+        $I->seeResponseCodeIsSuccessful();
+        $I->seeResponseContainsJson(array('message'=>'Venda cancelada.'));
+
+        $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
+        $I->dontSeeResponseContainsJson(array('canceled_at'=>null));
+        $I->seeResponseContains('canceled_at');
+    }
+
+    //TODO CancelSaleFailure 
+    //Não é possível gerar etiqueta pela api
+    // $I->seeResponseContainsJson('message'=>'Você não pode cancelar uma venda que já possui etiqueta emitida.');
+   
+
+    /** 
+    *@before CreateSale
+    * @depends CreateSale
+    */
+    public function MarkSaleAsPaid(ApiTester $I){
+
+        $I->wantTo("Marcar venda paga");
+
+        $I->sendPOST($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'].'/make-paid');
+        $I->seeResponseCodeIsSuccessful();
+        $I->seeResponseContainsJson(array('message'=>'Venda marcada como paga.'));
+
+        $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
+        $I->seeResponseContains('paid_at');
+        $I->dontSeeResponseContainsJson(array('paid_at'=>null));
+    }
+    
 
 
 
     public function DeleteAllSales(ApiTester $I){
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
-
-        $I->sendGET($this->consultar_all_endpoint);
+        $I->amBearerAuthenticated($this->tokenFromUserA);
+        $I->sendGET($this->salesEndpoint);
         $I->seeResponseCodeIsSuccessful();
 
-        $response = json_decode($I->grabResponse(),true);
-        $array_response = $response['data'];
-        foreach ($array_response as $value){
+        $allSales = json_decode($I->grabResponse(),true);
 
-            $I->sendDELETE($this->deletar_endpoint.$value['id']);
+        foreach ($allSales['data'] as $sale){
+
+            $I->sendDELETE($this->salesEndpoint.'/'.$sale['id']);
         }
+    }
+
+    /**
+    * @before CreateSale
+    */
+    public function DontSeeSaleFromAnotherUser(ApiTester $I){
+
+        $I->wantTo('Verifica se um usuário não vê vendas do outro');
+
+        $saleCreated = Fixtures::get('Sale');
+
+        $I->deleteHeader('Authorization');
+        $I->amBearerAuthenticated($this->tokenFromUserB);
+        
+        $I->sendGET($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']); // GET /sales/{id} 
+        $I->seeResponseCodeIsClientError();
+        
+        $I->sendGET($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']);    //  GET /sales 
+        $I->dontSeeResponseContainsJson(array('id'=>$saleCreated['data'][0]['id']));
+        $I->seeResponseCodeIsClientError();
+
+        
+        $I->sendPOST($this->salesEndpoint,$this->salesRequest); // POST /sales 
+        $I->dontSeeResponseContainsJson(array('user_id'=>$saleCreated['data'][0]['user_id']));  
+
+         
+        $I->sendPATCH($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']); // PATCH /sales
+        $I->seeResponseCodeIsClientError();
+
+        
+        $I->sendDELETE($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']);    // DELETE /sales/{id} 
+        $I->seeResponseCodeIsClientError();
+
+
+
+
+        // POST /sales/{id}/archive COM PROBLEMA
+        $I->sendPOST($this->salesEndpoint.'/'.$saleCreated['data'][0]['id'].'/archive');
+        $I->seeResponseCodeIsClientError();
+
+        // POST /sales/{id}/cancel COM PROBLEMA
+        $I->sendPOST($this->salesEndpoint.'/'.$saleCreated['data'][0]['id'].'/cancel');
+        $I->seeResponseCodeIsClientError();
+
+        // POST /sales/{id}/make-paid  COM PROBLEMA
+        $I->sendPOST($this->salesEndpoint.'/'.$saleCreated['data'][0]['id'].'/make-paid');
+        $I->seeResponseCodeIsClientError();
+
+        
+       
+
     }
 
 

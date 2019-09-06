@@ -8,30 +8,34 @@ Atenção aos tokens de acesso. Sales e Clients utilizam o de usuário. Webhooks
 ### Objetivo deste repositório? ###
 
 * Testes de clientes, vendas, webhooks do minhas vendas
-* 0.1
+* 0.2
 * (https://bitbucket.org/melhor-envio/minhas-vendas-tests/src/master/)
 
 # Testes existentes #
 
 ## ClientsCest ##
+*   CreateClientContract - Verifica se um cadastro é realizado com Sucesso, POST /clients
 *   CreateClientMissingField - Cadastra Clientes faltando Campos POST /clients
-*   CreateClient - Verifica se um cadastro é realizado com Sucesso, POST /clients
 *   UpdateClient - Verifica se um cadastro é realizado com Sucesso, PATCH /apps/clients/{id}
-*   CheckClient - Verifica se uma consulta é realizada com Sucesso, GET /clients
+*   CheckClients - Verifica se uma consulta é realizada com Sucesso, GET /clients
 *   CheckClientById - Verifica Consulta Client por Id GET /clients
+*   DontSeeClientFromAnotherIser - Assegura que um usuário não vê clientes de outro usuário 
 
 ## SalesCest ## 
-*   CadastrarVenda - Verifica se uma venda é cadastrada com sucesso, POST /sales
-*   AtualizarVenda - Verifica se uma venda é atualizada com sucesso, POST /sales/{id}
-*   ConsultarVenda - Verifica se uma consulta foi realizada com sucesso, GET /sales/{id}
-*   SucessListaVendas - Verifica se a lista de vendas é consultada com sucesso, GET /sales?(filter,sort,limit)
-*   FiltroVendas - Verifica alguns dos filtros estão corretos, GET /sales?(amount/customer/receiver/invoice)
-*   FiltroClientId - Verifica o filtro de client por Id GET /sales?filter[ client ]={id}
-*   FiltroStatus - Verifica o filtro de status GET /sales?filter[ status ]={created/archived/canceled/deleted}
-*   FiltroSort - Verifica a ordenação está correta GET /sales?sort={id/created_at/updated_at/deleted_at}
-*   Limit - WIP- Verifica limite de vendas GET /limit
-*   FailListaVendas - Verifica se filtro funciona com vendas nao inexistentes {amount/customer/receiver/invoice}
-*   DeleteAllSales - Apaga todas as vendas
+*   CreateSale - Verifica se uma venda é cadastrada com sucesso, POST /sales
+*   UpdateSale - Verifica se uma venda é atualizada com sucesso, POST /sales/{id}
+*   CheckSaleById - Consulta venda por ID GET /sales/{id}
+*   CheckSalesFilter - Verifica os filtros amount,sender,receiver,invoice GET /sales?filter[]=x,y
+*   FilterByClientId - Filtra clientes por ID GET /sales
+*   CheckFilterSort - Verifica se a ordenação está correta GET /sales?sort={variable}
+*   CheckSalesLimit - Verifica limite de vendas GET /sales?limit
+*   CheckFilterWithNoMatchingSales - Utiliza um filtro sem venda correspondente GET /sales?filter[]=x,y
+*   ArchiveSale - Verifica arquivar venda GET /sales/{id}/archive
+*   CancelSaleWithSucess - Verifica Cancelar a venda com sucesso POST /sales/{id}/cancel
+*   MarkSaleAsPaid - Verifica se arquiva venda com sucesso POST /sales/{id}/make-paid
+*   DontSeeSaleFromAnotherUser - Verifica se um usuário não vê vendas do outro 
+*   DeleteAllSales - Deleta todas as vendas (troque para public para usar e rode no terminal)
+
 
 ## WebhooksCest ##
 *   FailTokenUsuario - Verifica se autenticação está funcionando
