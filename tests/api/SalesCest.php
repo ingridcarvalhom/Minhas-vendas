@@ -1,49 +1,20 @@
 <?php 
 
+use \Codeception\Util\HttpCode;
 use Codeception\Util\Fixtures;
 
 class SalesCest
 {
-
     protected $salesRequest;
     protected $salesEndpoint;
     protected $TodasPermissoes;
-
-    protected function createClient(ApiTester $I){
-
-        $clientsEndpoint = '/clients';
-        $createClientRequest = [
-            'own_id' => '999128',
-            'name' => "Shopping Online",
-            'url' => "https://www.loja.com",
-            'email' => 'email@daloja.com',
-            'document' => '87620890000112',
-            'address' => [
-                'postal_code'=> '96020150',
-                'street' => 'Rua X',
-                'number' => '123',
-                'complement' => 'Sala X',
-                'district' => 'Bairro',
-                'city' => 'Pelotas',
-                'state' => 'RS'
-            ],
-        ];
-        $createClientRequest['own_id'] = strval(rand(0,1000000));
-        
-        $I->sendPOST($clientsEndpoint,$createClientRequest);
-        $I->seeResponseCodeIsSuccessful();
-
-        $response = json_decode($I->grabResponse(),true);
-
-        return $response;
-    }
 
     public function _before(ApiTester $I){
 
         //Cuidado com client_id pode ser que vc tenha que modifica-lo, e token, pode ser que tenha que criar um novo
 
-        $this->tokenFromUserA = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjllYThiYzViNTUxMzFhODY5NDE1OTk5ZTc0M2Q3MzA0ZGM5MDYwYzY4ZTU5ZTY2YzNkNjkwODIzNTQ5MGNlOGMxNjk1YTRkZDIxMzNkMGI2In0.eyJhdWQiOiIxIiwianRpIjoiOWVhOGJjNWI1NTEzMWE4Njk0MTU5OTllNzQzZDczMDRkYzkwNjBjNjhlNTllNjZjM2Q2OTA4MjM1NDkwY2U4YzE2OTVhNGRkMjEzM2QwYjYiLCJpYXQiOjE1Njc2OTI3ODMsIm5iZiI6MTU2NzY5Mjc4MywiZXhwIjoxNTk5MzE1MTgzLCJzdWIiOiJmMDg4MDExZi1lNzZjLTQzOWQtYjYzNC01OWQ1MGNlYjBiNWUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.YfsdDGswyxmNM3bUDoEA7B1zxYoi4oKXb_rKuLM1EUX2AwVeZSDpMw_YLtCccORgO4z4C2jZYoz2BUxFo-weilzGnU2jtWo2nKC_UpytBRBnSVOE1Y2KYiIE78FtZQ53IOnaxnajmNDa57B1xKPZ3mzNnQwr3cGXylGk7jlu_qNxzpPA5jO7vJIJeRgwXf04_Vs-WgaNLrmRbdX2ebp27xZMt2T-p8L9VIWETGwwp_btZ6ICwdBLysaWk4NLCPgFtNxENFRotHAELL4x1FSpF59E1E7y8qCkBHKswREl7g2IMpl8Z9c8Aru3YZIoYL-PukjRy539qBetMloOq98zBLO49Jc8r4ZfG65V3h3np4kgRzW-vjWVbUciN7sgEbijCw_622zgsf0p5FoTzc7rH8JUQHKwsTotThjEfPNWJmPXiGhwYcx_fHOx3MYh7G_nmGOjA6MU3OyEfmGsWotHSf4ipc-e0N-t_o_gSZttSRKPuX3S-_4OFyKSBbBwBFjjd1OySxQhhhCySvx2JOHfrKPmHfVSm2AYNQvp1OKa7AaMzT3_ofV9OhTpJaev0o1iQuA_ofEsFlzBPVECHDKn4AtmmgdvD7ZOhOuy8rvXWIgWCpQY0dyzGxG4-6ATNqLQsvhkwefOLgldqPGEOpSxwza3yxUU5CO10XB2DUEHwjE';
-        $this->tokenFromUserB = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQzYTJhYzQ4N2E5ZWFlYWNmZmFkNzkxZmU0ZjhmY2ViOGE4ZWFiOTEzODc0ZjMyYjZmYmM1MDQ0NThmZDBkZTk0MWYxZTIwMWFmMWY4YWVkIn0.eyJhdWQiOiIxIiwianRpIjoiZDNhMmFjNDg3YTllYWVhY2ZmYWQ3OTFmZTRmOGZjZWI4YThlYWI5MTM4NzRmMzJiNmZiYzUwNDQ1OGZkMGRlOTQxZjFlMjAxYWYxZjhhZWQiLCJpYXQiOjE1Njc3MDUxOTgsIm5iZiI6MTU2NzcwNTE5OCwiZXhwIjoxNTk5MzI3NTk4LCJzdWIiOiIyMDM5Zjk1My0wNjNjLTQ3MjctYTQ4ZC0xMjQzNTI4M2UyOGUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.Uhi3uNyBvxx0QAmPsJLJ7NzUFtYasag8UuzwcKFnmcAVlulUWgqV5QCL2TbYHgTi9OcD49Gri8TE-RpvFS1pYnu-6j6gLd8qarnkm9mL58_LFZ7f5cMq_cOEJFQbEgwykTIMMd6z-4iebxFbJ4kM_v8qqKaZugSpb74au6g6IKot46KFEPOvfZ3PgUTC-jIDkyal-m8v_QorXpb1zUUYkEidt_8fwHTbSwW78W_b8brkJILipRqGdNYQe-yA1d7ERBRLh6Po2jtr0tA6VwZN2xXkG9AX957wpy50eO4qGYRCoEtUFoeGSyfVmrC1THy_PbspI8Rt77F_wcPLiIAJnac2h7Um-h1VOHPvD3YLAziMJkYtVJ34c8kziT6Tw2RZrscWq2WoKqIuyZlSkF8qhcslu3t3OXRIiwOvpAV_6--HVVEXUIF_yzOua9RGDiguuXCwuxxk9fhmltKUq7sQ0I2_ehp90RWiQs6gUIA_iQwFtfkp_7_eenrXVdE_8ArLD1EhqP8ZlVZ1GjjN8dbrObFHNpPsCrokivXXyUJN6VWkFrdt2AaD03dz_kH3gYDTgiXtfjU-YRGH8IXYHmCuFsuU7qAsO5samx9Q_ieRKJDIeDw7sc2pqTraqHj5bJgOtdDwesGw-EZ219-pwaz1EBtFxxm9fij8DOxwpgMvrgc';
+        $this->tokenFromUserA = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImM5MzY5YTJlYTNiMmI2MGMwMzA4OWVlYmE4YjUxMThhYzk4OTM3ODE3ZWZhYjBkYzFlY2E1OWNhMmFiOGE0NjRmYTMwMTBlZDBiYWZiMzNlIn0.eyJhdWQiOiIxIiwianRpIjoiYzkzNjlhMmVhM2IyYjYwYzAzMDg5ZWViYThiNTExOGFjOTg5Mzc4MTdlZmFiMGRjMWVjYTU5Y2EyYWI4YTQ2NGZhMzAxMGVkMGJhZmIzM2UiLCJpYXQiOjE1NjgzMDMwMTYsIm5iZiI6MTU2ODMwMzAxNiwiZXhwIjoxNTk5OTI1NDE2LCJzdWIiOiJmMDg4MDExZi1lNzZjLTQzOWQtYjYzNC01OWQ1MGNlYjBiNWUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.DbTjFyZRZBSRhv_WKugNqLjhJpl5ZwTe1xLOHKpR_xBaPkqgunLOoKsCvV_5z5BCm-gHprd_RFc7Vtl-20RWOi_pzZRKmgIaYzV05O9GCl6_MbdG8kUJbkOI6sup97h4JZ1JR6IWE7MHrzNyrda8MFAHDW2ptS5x_SUstg4WXShu0RfBxWsEdITKE-LKBwR0H85P6DtERXZQ5FbWCLjo202apjpv33nf3U-W1GojS4zYU-MahMBiuud1okUJHsge6drD2YhER59HQ8MdseDFxojltJHDRmnoEVowHjZ4lG4rJ--wgfZ_Rmjhm7LL2dkT2BUqEOaWy76-SsUQ4FEUTQU3Qh7Xf7SGkyaTGHVvkwa2WubQ_vwNXVtZipCEQ9pKo-q-zfJaxo3Lk9LDf4uNm4zaC4rHOjipTVKcd4tJl_u2ESTpYcOyrP85-5CAQl4whV54jWbqh-k3hEOE6psvSVOCGSif_wY3rTtItXzL6JfOEkemDZFRyYak4pPm_leMpodk0OB1_G9dMl3FtlVpsL8OP9X8jaTOzEQ42F4dzT0_RCMmemM0ndIHkZuExUKcOVogJ9Y1CXz3S7J3MtRU4jZbX8vxzPI0UjAOEd60Cxg0LnMus1Gn9u-LD-6gLO2C2S4F0ETFPgZwAJsDFFS_A92KlTqk6CvquMM_Y8kM4uQ';
+        $this->tokenFromUserB = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZjNDMzYzgxNmRkZTcwMTUyNzI4NGI5ODAwOGY4NTJhYWY3OWNiZGMxYmRhYTgyYmNiMTZkMGQwYWY3N2E5OTMxYmUwY2JiNjQwOWE1M2NjIn0.eyJhdWQiOiIxIiwianRpIjoiNmM0MzNjODE2ZGRlNzAxNTI3Mjg0Yjk4MDA4Zjg1MmFhZjc5Y2JkYzFiZGFhODJiY2IxNmQwZDBhZjc3YTk5MzFiZTBjYmI2NDA5YTUzY2MiLCJpYXQiOjE1NjgzMDMwNTUsIm5iZiI6MTU2ODMwMzA1NSwiZXhwIjoxNTk5OTI1NDU1LCJzdWIiOiIyMDM5Zjk1My0wNjNjLTQ3MjctYTQ4ZC0xMjQzNTI4M2UyOGUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.Ow67QIAGyTDq_ZRBdlG8lzbRZd8SE-FREPpEgi6phbzl2LOgBArGuqTr9fTxa3wx95S79BXAz-XYHVHwk5Vh1SRvjy1d-VjEpA5FmPB2WONfbeYycMSsCNWWafbPV0o4m5EgDKijqK0elF94Jmaqp7cjE20d2qmW7aGmAeKxVx90NCY5i00XnD1H5qsjo4O8b3zI1o11S6jQW_-C__8gjmOoIbx4XwzGstbqZ-JiGUBTsFGScNrfswVMRyYvjYjAKtoGdd82Gc88FP9rgXlh79vQsXScvrGkHrj190za9vImwyHjzmxFzyL1dwEWhxh0c9DlfNZGSiig9tKtEn2JzCWG65PW1EsHkbIzuqEOhMGEo7P7OFziodBraOskb01vyQv2Ms6SgM_in6X71Yjll17sPBSvUw2A0Iq3CFwqaPMLDRtHqq32l3HiJtVP1MAv9mX3WX2d_EjkouHhTfyi8IudGyEAIRvOCOZ-VcKcL2ROrHd2m2tDoad1axGCroyhatTmUXJXk1yZqdnvWJCnO2Ri_8SMaPNRaYiyyi8KEnsJaG4VPvGR8zP4Nf4CZlsW26jD-INwmAYhlmG4laCm_R4--IA4ffkEE59AfC3nCjrXwuQRrkVUjEmAIxp8AP6zHVI5qyLUDeB10-KR2Lvx6PaOIv0IKiREussyLy7jba4';
 
         $this->salesEndpoint = '/sales';
 
@@ -221,18 +192,38 @@ class SalesCest
         ];
     }
 
+    protected function createClient(ApiTester $I){
 
-    protected function DeleteSale(ApiTester $I){
-
-        $I->sendDELETE($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
-
+        $clientsEndpoint = '/clients';
+        $createClientRequest = [
+            'own_id' => '999128',
+            'name' => "Shopping Online",
+            'url' => "https://www.loja.com",
+            'email' => 'email@daloja.com',
+            'document' => '87620890000112',
+            'address' => [
+                'postal_code'=> '96020150',
+                'street' => 'Rua X',
+                'number' => '123',
+                'complement' => 'Sala X',
+                'district' => 'Bairro',
+                'city' => 'Pelotas',
+                'state' => 'RS'
+            ],
+        ];
+        $createClientRequest['own_id'] = strval(rand(0,1000000));
+        
+        $I->sendPOST($clientsEndpoint,$createClientRequest);
         $I->seeResponseCodeIsSuccessful();
+
+        $response = json_decode($I->grabResponse(),true);
+
+        return $response;
     }
+
 
     public function CreateSale(ApiTester $I){
         
-        sleep(1);
-       
         $this->salesRequest[0]['client_id'] = 1;
         $this->salesRequest[0]['own_id'] = strval(rand(0,10000));
 
@@ -258,7 +249,7 @@ class SalesCest
                 ]
             ]
         ]);
-
+        //TODO: Pode ser feito de um modo melhor
         $I->seeResponseContainsJson(array('own_id'   =>$this->salesRequest[0]['own_id']));
         $I->seeResponseContainsJson(array('own_url'  =>$this->salesRequest[0]['own_url']));
         $I->seeResponseContainsJson(array('client_id'=>$this->salesRequest[0]['client_id']));
@@ -277,28 +268,40 @@ class SalesCest
 
     /**
     * @before CreateSale
-    * @depends CreateSale
     * @after DeleteSale
     */
     public function UpdateSale(ApiTester $I){
 
         $I->wantTo("Atualizar venda ".Fixtures::get('Sale')['data'][0]['id']);
 
-        $faker = Faker\Factory::create();
-
-        $this->updateRequest['own_url'] = $faker->url;
+        $this->UpdateSaleBuildRequest($I);
 
         $I->sendPATCH($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'],$this->updateRequest);
         $I->seeResponseCodeIsSuccessful();
 
         $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
-        $I->seeResponseCodeIsSuccessful();
+
+        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseMatchesJsonType([
             'data'=>'array'
         ]);
         
         $response = json_decode($I->grabResponse(),true);
+        //TODO Trocar esse assert por um containsJson
         $I->assertEquals($response['data']['own_url'],$this->updateRequest['own_url']);  
+    }
+
+    protected function UpdateSaleBuildRequest(ApiTester $I){
+        $faker = Faker\Factory::create();
+        $this->updateRequest['own_url'] = $faker->url;
+    }
+
+
+    protected function DeleteSale(ApiTester $I){
+
+        $I->sendDELETE($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
+
+        $I->seeResponseCodeIsSuccessful();
     }
 
 
@@ -311,8 +314,8 @@ class SalesCest
         $I->wantTo("Consultar Venda por ID".Fixtures::get('Sale')['data'][0]['id']);
 
         $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
+        
         $I->seeResponseCodeIsSuccessful();
-
         $I->seeResponseMatchesJsonType([
             'data'=>[
                 'id'=>'integer',
@@ -453,6 +456,7 @@ class SalesCest
         }
 
         $I->sendGET($endpoint);
+
         $I->seeResponseCodeIsSuccessful();
 
         $response = json_decode($I->grabResponse(),true);
@@ -702,7 +706,6 @@ class SalesCest
         $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);
         $I->seeResponseContains('archived_at');
         $I->dontSeeResponseContainsJson(array('archived_at'=>null));
-        
     }
 
     /** 
@@ -721,10 +724,6 @@ class SalesCest
         $I->dontSeeResponseContainsJson(array('canceled_at'=>null));
         $I->seeResponseContains('canceled_at');
     }
-
-    //TODO CancelSaleFailure 
-    //Não é possível gerar etiqueta pela api
-    // $I->seeResponseContainsJson('message'=>'Você não pode cancelar uma venda que já possui etiqueta emitida.');
    
 
     /** 
@@ -745,6 +744,73 @@ class SalesCest
     }
     
 
+    /**
+    * @before CreateSale
+    * @before changeToUserB
+    */
+    public function DontSeeSaleFromAnotherUser(ApiTester $I){
+        //TODO separar esse teste em vários, não é uma boa ideia ter vários inserts, foi feito assim para economizar tempo da requisição
+        $I->wantTo('Verifica se um usuário não vê vendas do outro');
+        
+        $this->UnauthorizedGetSalesById($I);
+        $this->UnauthorizedGetSales($I);
+        $this->UnauthorizedPostSales($I);
+        $this->UnauthorizedPatchSales($I);
+        $this->UnauthorizedDeleteSales($I);
+        $this->UnauthorizedPostSalesArchive($I);
+        $this->UnauthorizedPostSales($I);
+        $this->UnauthorizedPostSalesCancel($I);
+        $this->UnauthorizedPostSalesMakePaid($I);
+    }
+
+    protected function changeToUserB(ApiTester $I){
+        $I->deleteHeader('Authorization');
+        $I->amBearerAuthenticated($this->tokenFromUserB);
+    }
+
+    protected function UnauthorizedGetSalesById(ApiTester $I){
+        $I->sendGET($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']); // GET /sales/{id} 
+        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
+    } 
+
+    protected function UnauthorizedGetSales(ApiTester $I){
+        $I->sendGET($this->salesEndpoint);    //  GET /sales 
+        $I->dontSeeResponseContainsJson(array('id'=>Fixtures::get('Sale')['data'][0]['id']));
+        $I->seeResponseCodeIs(HttpCode::OK);
+    }
+
+    protected function UnauthorizedPostSales(ApiTester $I){
+        $I->sendPOST($this->salesEndpoint,$this->salesRequest); // POST /sales 
+        $I->dontSeeResponseContainsJson(array('user_id'=>Fixtures::get('Sale')['data'][0]['user_id']));  
+    }
+
+    protected function UnauthorizedPatchSales(ApiTester $I){
+        $I->sendPATCH($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']); // PATCH /sales
+        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
+    }
+
+    protected function UnauthorizedDeleteSales(ApiTester $I){
+        $I->sendDELETE($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id']);    // DELETE /sales/{id} 
+        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
+    }
+
+    protected function UnauthorizedPostSalesArchive(ApiTester $I){
+        // POST /sales/{id}/archive COM PROBLEMA
+        $I->sendPOST($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'].'/archive');
+        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
+    }
+
+    protected function UnauthorizedPostSalesCancel(ApiTester $I){
+        // POST /sales/{id}/cancel COM PROBLEMA
+        $I->sendPOST($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'].'/cancel');
+        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
+    }
+
+    protected function UnauthorizedPostSalesMakePaid(ApiTester $I){
+        // POST /sales/{id}/make-paid  COM PROBLEMA
+        $I->sendPOST($this->salesEndpoint.'/'.Fixtures::get('Sale')['data'][0]['id'].'/make-paid');
+        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
+    }
 
 
     public function DeleteAllSales(ApiTester $I){
@@ -759,57 +825,6 @@ class SalesCest
 
             $I->sendDELETE($this->salesEndpoint.'/'.$sale['id']);
         }
-    }
-
-    /**
-    * @before CreateSale
-    */
-    public function DontSeeSaleFromAnotherUser(ApiTester $I){
-
-        $I->wantTo('Verifica se um usuário não vê vendas do outro');
-
-        $saleCreated = Fixtures::get('Sale');
-
-        $I->deleteHeader('Authorization');
-        $I->amBearerAuthenticated($this->tokenFromUserB);
-        
-        $I->sendGET($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']); // GET /sales/{id} 
-        $I->seeResponseCodeIsClientError();
-        
-        $I->sendGET($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']);    //  GET /sales 
-        $I->dontSeeResponseContainsJson(array('id'=>$saleCreated['data'][0]['id']));
-        $I->seeResponseCodeIsClientError();
-
-        
-        $I->sendPOST($this->salesEndpoint,$this->salesRequest); // POST /sales 
-        $I->dontSeeResponseContainsJson(array('user_id'=>$saleCreated['data'][0]['user_id']));  
-
-         
-        $I->sendPATCH($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']); // PATCH /sales
-        $I->seeResponseCodeIsClientError();
-
-        
-        $I->sendDELETE($this->salesEndpoint.'/'.$saleCreated['data'][0]['id']);    // DELETE /sales/{id} 
-        $I->seeResponseCodeIsClientError();
-
-
-
-
-        // POST /sales/{id}/archive COM PROBLEMA
-        $I->sendPOST($this->salesEndpoint.'/'.$saleCreated['data'][0]['id'].'/archive');
-        $I->seeResponseCodeIsClientError();
-
-        // POST /sales/{id}/cancel COM PROBLEMA
-        $I->sendPOST($this->salesEndpoint.'/'.$saleCreated['data'][0]['id'].'/cancel');
-        $I->seeResponseCodeIsClientError();
-
-        // POST /sales/{id}/make-paid  COM PROBLEMA
-        $I->sendPOST($this->salesEndpoint.'/'.$saleCreated['data'][0]['id'].'/make-paid');
-        $I->seeResponseCodeIsClientError();
-
-        
-       
-
     }
 
 

@@ -1,90 +1,157 @@
 <?php 
 
+use \Codeception\Util\HttpCode;
+use Codeception\Util\Fixtures;
+
 class WebhooksCest
 {
-    protected $todas_permissoes;
-
-    protected $listar_endpoint;
-
-    protected $cadastrar_request;
-    protected $cadastrar_endpoint;
-    protected $apagar_endpoint;
-
+    protected $createRequest;
+    protected $cadastrarEndpoint;
     
+    //Comece trocando esse token de usuário
     public function _before(ApiTester $I)
     {
-        $this->BearerToken = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImIyMjJhZWMyNWJjN2ZhZTRiODFlNWJlNGIyZmU3YmQ0YmFiNWNmYTE1NGM3ZmYzZDNkYTE0NWI2NzliZDQxOWNkNDU0NjRhNWIyMmMxZTU2In0.eyJhdWQiOiIxIiwianRpIjoiYjIyMmFlYzI1YmM3ZmFlNGI4MWU1YmU0YjJmZTdiZDRiYWI1Y2ZhMTU0YzdmZjNkM2RhMTQ1YjY3OWJkNDE5Y2Q0NTQ2NGE1YjIyYzFlNTYiLCJpYXQiOjE1NjQ0MjEyMTAsIm5iZiI6MTU2NDQyMTIxMCwiZXhwIjoxNTk2MDQzNjEwLCJzdWIiOiIyMDM5Zjk1My0wNjNjLTQ3MjctYTQ4ZC0xMjQzNTI4M2UyOGUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.axyUD4P5YTJjc_VixEOaspno8s4gZQZHWD2AbqB1p7sc4qyNGeu4aIQoGTRbL04Dg3F6Yu79UJv_ZZYqkzyzV4d2JTZxjn9TPlm07tPq8Y6RX2TAI_jpLkFmSipy-WBRoCthRn--MkdAc9M0fXI6Wsibowlg8hulCUI6s3NrCU6ItccDxaa54JKng41r_QNHu6cdsecz11wV2QD32Twbl-O8Jgs4v1rIoRLeuJSLrlgAmw4GqpBf3udT0rIshQkshfWgiv94aHbr7lRxvszbTdDUsi--Gbk1zWLwsYqAn-morlnnxQ0U6KWWIjlxzU7QjfBjpwDNHj45DahS_rvk5-VH0aYQC0PFzPaEmot37hHfVt8NlUIO0Xd60oU9nTCwQkUQkD-Davo2ZCZV-opiZJGmaOb3SIU4_v9wXaQKuavuGXkTfK-cOOmTtd2V27-7_Uoe2UKi5Ne26idLos4iwQTmXBUz1NMMbqYksa8DHZB0bALKGkG-UTpmx9b2BevJ2qeS4h618TX0lg5IKPc3KCTLiNpFQx3A8kcLo6OVPdb9vzuRjc2fem2SXwJdC7REXvUPkAD5rzHAiH2Ivj33pk1Lx1Zdq7yMhs9QoW8uTNPS2qI0YBxnpGsYk9OizxuUjsWWOZNGrBd9P63Ymk2RcH8PmWyjURfFU1ulCVx88Bk';
-        
-    }
+        // $this->platformToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjkwMTQ0YTM1ZjAwNjFlYmJmNDllZDJlYTIzNmUyNDc4ZDIxNWI4OGJhZmY4YmQ3NDAyZjA4MTVmNWMyMjk1M2I1ODI2YmE1MTIyYjgyMmVjIn0.eyJhdWQiOiIxIiwianRpIjoiOTAxNDRhMzVmMDA2MWViYmY0OWVkMmVhMjM2ZTI0NzhkMjE1Yjg4YmFmZjhiZDc0MDJmMDgxNWY1YzIyOTUzYjU4MjZiYTUxMjJiODIyZWMiLCJpYXQiOjE1NjQxNjk0ODIsIm5iZiI6MTU2NDE2OTQ4MiwiZXhwIjoxNTk1NzkxODgyLCJzdWIiOiJhNDJkMWIwYy01MjA1LTQyMWMtODRlZi01NWZiNjZiNjg0NGYiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.3jovoMjzOqp7CgrJFKqkfA5BUzj5EBrBG0PNH6RmrUhA1H5sBuY4GC9NCRml21ScfRsKkRGDA2jHhbeuW4XBZ9qVE-2p0lPHw-ykygmU2csmBKNYBO70Utfqyd9PRRPC3xi_jm20CLBf8B7o1fsmCEEVWLBhQZz6SkKqbzbpAgsd0qEj5LWaIIS3dONu0KXo1pdU6liw27WYfrwZA7MIpILCkfSN9-4m40UotGVefU5dwiALYD_QUoAPfMZe9AvD0v9KorDQnsKrzJBvOIUy1zwEPV7tvLfpyRDhQU_OKslaahr45kX65ZMUZYOK3U50NA7nAr_wyyegNBGj3j2CoVwl-CXTWQSQkqjzltTF8YX3-kcr4vjP29fwN22QkxVVh_izREQJjF409MbiWVEBkYf-6N6DyL4h3vvOfJcZE2V4G0EVLAgUI7H1kKUkr37QKYhaJVkoLKrc8g_5nqedHQOt8LD5G5RSgiYnFfuosdLrFcE0FFgTToKfNHyfiNq61utwx2Pi7md5aY0XRRxzqdqPT4gqWpPSfG0_XyqE2htamWoXfwLIHBIyQufp8TAcpTolxpH8ANEyjE5jHNwb3sv0vpmhk5ks4AOGkftZlk7YYnupmPLDYhMWTp1Gr7Vq6AQ7JqrFJvMmMeE43mN00pPw1QH3sLEnHi5oVjweQ4s';
+        $this->userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5YTc4MzJjZWU0ZWM0ZTdlNWZlNGQ0ZDg2NTQ4ZTczZmQxODllY2JiMTI0Yzc3MDRiOTU0MmZkNzI5ODQwOWNjNmM3YWU5Y2Y3NzYwODY3In0.eyJhdWQiOiI1OTAiLCJqdGkiOiIzOWE3ODMyY2VlNGVjNGU3ZTVmZTRkNGQ4NjU0OGU3M2ZkMTg5ZWNiYjEyNGM3NzA0Yjk1NDJmZDcyOTg0MDljYzZjN2FlOWNmNzc2MDg2NyIsImlhdCI6MTU2ODEzNTAyMiwibmJmIjoxNTY4MTM1MDIyLCJleHAiOjE1NzA3MjcwMjIsInN1YiI6IiIsInNjb3BlcyI6WyJtaW5oYXN2ZW5kYXM6OndlYmhvb2tzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OndlYmhvb2tzOndyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiXX0.S8ZYPG_cT1DUV-6m1YBWkF68mRvmH7Tf9kuVkuTuT5EjDZUed1tOtHxsFBIzXzWNS3xBMMd50p4zCVCC4I7v6loX-pfL34meqsRJsyZl3I-HnMG0Mv5h4S_kW9Zb3SXoDyAqDo0frfFuS3DvKeIKa2PMeganzCf1jTADZHreNeYMklq75wsr3OX4ym8-3GqsSjE_BmjdwFvBodwEsm9q2diJXSFlBP22HEoIvnnvOhrjW0siF1ztUUEOZkpGnGuLK-mjadweWsDsIzif_fG2QhhaMXaY2AxluBzgWh5-X0d9aC8Rvdf5gvvrNmblA27iIYHQifEVONO__h5Fm1t8MVmDyhIpCb0THBJCvk9Y0Xz_-sRoaxNjYES2VvOC8pPUWVrhb-r6rrTcNe_xktt_JOq1v_AdlGJ1S0m8rq2wdvO4wti15FowfFFzG3qOK_cwsijIy8zrVM1V5ne7rRNBwc-KhVjxIes7waeminLFkU_OxTHeaSjhbFUa78BlqLyjmmp4CLtHHfZD0W1QJZsDG0NYO_677VF7x_DGZud7OZQOK1phta-SKKhnt64gf58GcSqFsj2oiK0s8GzQMyCiRKkDGZV835isXyPV-ngd2QChXovMH-xAZqqiCLL2sCgSVqRs5SrIziwAmknxEL61w8T98_glAX-QanBwfQEnsHs';
+        $this->invalidToken = 'eymamamaco';
+        $this->webhooksEndpoint = '/apps/webhooks';
 
-
-    protected function PreparaContractListar(ApiTester $I){
-
-        $this->listar_endpoint = '/apps/webhooks/models';
-        
-    }
-
-    /**
-    * @before PreparaContractListar
-    */
-    public function ListarContractWebhooks(ApiTester $I){
-        
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
+        $I->amBearerAuthenticated($this->userToken);
+        
+        //Sempre será necessário criar um link do ngrok e atualizar o url
+        $this->updateRequest = [
+            'target_url' => 'https://4df61701.ngrok.io'
+        ];
 
-        $I->sendGET($this->listar_endpoint);
-        $I->seeResponseCodeIsSuccessful();
-    }
-
-    protected function PreparaContractCadastrar(ApiTester $I){
-
-        $this->cadastrar_endpoint = '/apps/webhooks';
-        $this->cadastrar_request = [
-            'webhook_id' => '1337',
-            'target_url' => "https://www.sua-url-de-notificacao.com.br",
-           
+        $this->createRequest = [
+            'webhook_id' => '1',
+            'target_url' => "http://4df61701.ngrok.io",
         ];
     }
 
-    /**
-    * @before PreparaContractCadastrar
+    public function VerifyInvalidUserToken(ApiTester $I){
+
+        $I->wantTo("Verifica se token de usuário é negado");
+
+        $I->amBearerAuthenticated($this->invalidToken);
+        $I->sendGET($this->webhooksEndpoint);
+
+        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+    }
+
+
+    public function CheckWebhooks(ApiTester $I){
+
+        $I->wantTo("Consulta Webhooks ativos");
+
+        $I->sendGET($this->webhooksEndpoint);
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseMatchesJsonType([
+            "data"=>'array',
+            "links"=> [
+                'first'=>'string',
+                'last'=>'string',
+                'prev'=>'string|null',
+                'next'=>'string|null',
+            ],
+            "meta"=> [
+                'current_page'=>'integer',
+                'from'=>'null|integer',
+                'last_page'=>'integer',
+                'path'=>'string',
+                'per_page'=>'integer',
+                'to'=>'null|integer',
+                'total'=>'integer'
+            ]
+        ]);
+    }
+
+
+    public function ListWebhooks(ApiTester $I){
+        
+        $I->wantTo("Listar tipos de Webhooks");
+
+        $I->sendGET($this->webhooksEndpoint.'/models');
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseContainsJson(array('id'=>1,'model'=>'sale','method'=>'all','id'=>2,'model'=>'sale','method'=>'created'));
+        $I->seeResponseContainsJson(array('id'=>2,'model'=>'sale','method'=>'created'));
+        $I->seeResponseContainsJson(array('id'=>3,'model'=>'sale','method'=>'updated'));
+        $I->seeResponseContainsJson(array('id'=>4,'model'=>'sale','method'=>'deleted'));
+        $I->seeResponseContainsJson(array('id'=>5,'model'=>'shipping','method'=>'all'));
+        $I->seeResponseContainsJson(array('id'=>6,'model'=>'shipping','method'=>'created'));
+        $I->seeResponseContainsJson(array('id'=>7,'model'=>'shipping','method'=>'updated'));
+        $I->seeResponseContainsJson(array('id'=>8,'model'=>'shipping','method'=>'deleted'));
+        $I->seeResponseContainsJson(array('id'=>9,'model'=>'conciliation','method'=>'all'));
+        $I->seeResponseContainsJson(array('id'=>10,'model'=>'conciliation','method'=>'created'));
+        $I->seeResponseContainsJson(array('id'=>11,'model'=>'conciliation','method'=>'updated'));
+        $I->seeResponseContainsJson(array('id'=>12,'model'=>'conciliation','method'=>'deleted'));
+    }
+
+
+    public function CreateWebhook(ApiTester $I){
+
+        $I->wantTo("Cadastrar Webhook");
+
+        $I->sendPOST($this->webhooksEndpoint,$this->createRequest);
+
+        $I->seeResponseCodeIs(HttpCode::CREATED);        
+        $I->seeResponseMatchesJsonType([
+            "data"=>[
+                'app_id'=>'string',
+                'webhook_id'=>'string',
+                'target_url'=>'string',
+                'token'=>'string',
+                'updated_at'=>'string',
+                'created_at'=>'string',
+                'id'=>'integer'
+            ]
+        ]);
+
+        $response = json_decode($I->grabResponse(),true);
+
+        Fixtures::add('webhook',$response);
+    }
+
+    
+    /** 
+    * @before CreateWebhook
     */
-    public function CadastrarContractWebhooks(ApiTester $I){
+    public function DeleteWebhook(ApiTester $I){
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
+        $I->wantTo("Apagar Webhook");
 
+        $I->sendDELETE($this->webhooksEndpoint.'/'.Fixtures::get('webhook')['data']['id']);
 
-        $I->sendPOST($this->cadastrar_endpoint,$this->cadastrar_request);
-        $I->seeResponseCodeIsSuccessful();
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseContainsJson(array('message'=>'Webhook apagado!'));
     }
 
 
-    protected function PreparaContractApagar(ApiTester $I){
-
-        $this->apagar_endpoint = '/apps/webhooks/';
-    }
-
-    /**
-    * @before PreparaApagar
+    /** 
+    *@before CreateWebhook
     */
-    public function ApagarContractWebhook(ApiTester $I){
+    public function UpdateWebhook(ApiTester $I){
 
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->haveHttpHeader('Accept', 'application/json');
-        $I->amBearerAuthenticated($this->BearerToken);
+        $I->wantTo("Atualizar Webhook");
 
-        $endpoint = $this->apagar_endpoint.$example['id'];
-        $I->sendDELETE($this->apagar_endpoint);
-        $I->seeResponseCodeIsSuccessful();
-    }
+        $I->sendPUT($this->webhooksEndpoint.'/'.Fixtures::get('webhook')['data']['id'],$this->updateRequest);
 
-    protected function ApagarWebhookProvider(ApiTester $I){
-
-        return [
-            ['id'=>'1'],
-        ];
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseMatchesJsonType([
+            "data"=>[
+                'id'=>'integer',
+                'app_id'=>'integer',
+                'webhook_id'=>'integer',
+                'target_url'=>'string',
+                'token'=>'string',
+                'updated_at'=>'string',
+                'created_at'=>'string',
+                'deleted_at'=>'null'
+            ]
+        ]);
     }
 }

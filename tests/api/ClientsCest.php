@@ -11,9 +11,9 @@ class ClientsCest
 
         //Todo dia deve ser atualizado os tokens, criar um token em /painel gerenciar->tokens no ME,  
 
-        $this->tokenFromUserA = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhjNDNjNDZmOGZiOTk2NWNmMDQ4MDBkYWI2ZWVjZjZjOTA5ZWQzMzcxMzgzM2FlN2UyNTI3N2MxZjZiNDhjZmQwNTdmYTVlYjQ5ZDE5NDRlIn0.eyJhdWQiOiIxIiwianRpIjoiOGM0M2M0NmY4ZmI5OTY1Y2YwNDgwMGRhYjZlZWNmNmM5MDllZDMzNzEzODMzYWU3ZTI1Mjc3YzFmNmI0OGNmZDA1N2ZhNWViNDlkMTk0NGUiLCJpYXQiOjE1NjgyMTYzOTUsIm5iZiI6MTU2ODIxNjM5NSwiZXhwIjoxNTk5ODM4Nzk1LCJzdWIiOiJmMDg4MDExZi1lNzZjLTQzOWQtYjYzNC01OWQ1MGNlYjBiNWUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIl19.LwD_NpKhnSfnqkoUGrTcqjMawTZXU_7kzgI-mwVdOPxMgamBSEHwKb2g4fO9_3_i26QvGZr0ouzU3ck-xMMz_A76unAHpnuiDQqIevMOMuoRXJI1sRdcQ--ICmFe0beUYB8jKh5KDBbJ_T5uu5KauGiNthRTTCnhiUh4zHliO7vf89s-EyY82ZtxLgL8CuasVnY3LYRB2TTInaT6BHRv_yVPkfXVBSSzYguCSnwRZEnKg8QpQj9LGiVDsUKM0MoGRO5JwDKDvmvknrMgPlS3oBNLhMMoyfvZss9BJFBeBsOPA18IrP8zH8jvN-V3X-PBSICg58delCTPjhvJnfmiLhesKkOzIVsaGeQf1JxUTN_7c1xs_H_6vo7VCo1OmntsH0A6cZaiNPxUtDt-mcfEIcOiKNwHz5Bqjzb4X5F9vgTB4YXlR47lHWLSHKZNpO5kwRolnisQxdWNZCV5z_wG3QIzghIwrZOmgECGD7X54FUxkGMgE_5oU5HU__qKcpo2t7PrAZC0hyO5FZrwNG2QzB3kNC_L1MQ8jyfaW0L94XW3LuSHHngt05Pg_18fQBApYk2JmJrzgIVcQs4d2E6P_s9pfCAezcOPBzvlFP8aLiaSHlTyKPaCR4YXdZ2ZsrPZHd_8P6tP8tRKVv6-z4nRFOhOsyXTLxw1EJowiQCsIw0';
-        $this->tokenFromUserB = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJhNzc1NTRhMDA1MzFmYjIwZjczNDYyZDc0ZGFiZTE3YjczZDlmZTEzNDkxMGViM2ZhMGY3YmFmNzEzZDY3NDRhYzJhMWQ4MDU3ZTA2NjhkIn0.eyJhdWQiOiIxIiwianRpIjoiMmE3NzU1NGEwMDUzMWZiMjBmNzM0NjJkNzRkYWJlMTdiNzNkOWZlMTM0OTEwZWIzZmEwZjdiYWY3MTNkNjc0NGFjMmExZDgwNTdlMDY2OGQiLCJpYXQiOjE1NjgyMTY0MzMsIm5iZiI6MTU2ODIxNjQzMywiZXhwIjoxNTk5ODM4ODMzLCJzdWIiOiIyMDM5Zjk1My0wNjNjLTQ3MjctYTQ4ZC0xMjQzNTI4M2UyOGUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIl19.yRImf798O3hSOKMqLIyUmjD2mzEg4xsd-qHC1Yt3JOIk-RuiUhIZp5GjC2YfMkaYGQUJHE-ypq72JHzQhROQjv0wdkTnx39I8qXaBh4PoO5WDbXvAgwVXLn_TNGYxXiHTyeeVBCBO09cB9G-uUS9eebkbObi8qZ2C2KqIbanuuyYZFPxLMpqYfIpCBoBkQwAaqIMQIV2KLn-fRfbtpEvOuhaVZvBbmDjU0JCdWPeENSxaMAkppMkp-pLaF7a20NWcny8lWuz4gY8dKQGZ-Vi-9VCplzvia_7QhzV2EAXMpHgfBMpprHLIEzynVsvH1qKTVvKY9vdO7FHo6bEcsyeSQ8ohLT9hxphzV5WxyEz-VH2y0PkpxdPA9aqV9qosm3ylTTxHKhddNid1mqBB-1RicrTfBj3SUhP6HdcT9OALQqaiJbEOXgce93N0o-PNMWBf_xE08NF9uk7j8Lh0DkuRtvv8_JEu9zEnAdNZWDk_c54ltfiD0DPSbDc7l8tzmC0MawHZNiQ0B570HhxyF2AmZfk1D4bIoGfNkiXeaSZL61nZtRmdtG_SSNjQnttye4c5bSwz5SFMp6454baGE8yGsEN8dOkQaLP3baKU9JeHjlZISLu2NM8S-4UNQFBEybh1xzo_Fdmv1BWy_QuJ5s0_v3SRJ98dqZgu8QL-PkdZHQ';
-
+        $this->tokenFromUserA = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImM5MzY5YTJlYTNiMmI2MGMwMzA4OWVlYmE4YjUxMThhYzk4OTM3ODE3ZWZhYjBkYzFlY2E1OWNhMmFiOGE0NjRmYTMwMTBlZDBiYWZiMzNlIn0.eyJhdWQiOiIxIiwianRpIjoiYzkzNjlhMmVhM2IyYjYwYzAzMDg5ZWViYThiNTExOGFjOTg5Mzc4MTdlZmFiMGRjMWVjYTU5Y2EyYWI4YTQ2NGZhMzAxMGVkMGJhZmIzM2UiLCJpYXQiOjE1NjgzMDMwMTYsIm5iZiI6MTU2ODMwMzAxNiwiZXhwIjoxNTk5OTI1NDE2LCJzdWIiOiJmMDg4MDExZi1lNzZjLTQzOWQtYjYzNC01OWQ1MGNlYjBiNWUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.DbTjFyZRZBSRhv_WKugNqLjhJpl5ZwTe1xLOHKpR_xBaPkqgunLOoKsCvV_5z5BCm-gHprd_RFc7Vtl-20RWOi_pzZRKmgIaYzV05O9GCl6_MbdG8kUJbkOI6sup97h4JZ1JR6IWE7MHrzNyrda8MFAHDW2ptS5x_SUstg4WXShu0RfBxWsEdITKE-LKBwR0H85P6DtERXZQ5FbWCLjo202apjpv33nf3U-W1GojS4zYU-MahMBiuud1okUJHsge6drD2YhER59HQ8MdseDFxojltJHDRmnoEVowHjZ4lG4rJ--wgfZ_Rmjhm7LL2dkT2BUqEOaWy76-SsUQ4FEUTQU3Qh7Xf7SGkyaTGHVvkwa2WubQ_vwNXVtZipCEQ9pKo-q-zfJaxo3Lk9LDf4uNm4zaC4rHOjipTVKcd4tJl_u2ESTpYcOyrP85-5CAQl4whV54jWbqh-k3hEOE6psvSVOCGSif_wY3rTtItXzL6JfOEkemDZFRyYak4pPm_leMpodk0OB1_G9dMl3FtlVpsL8OP9X8jaTOzEQ42F4dzT0_RCMmemM0ndIHkZuExUKcOVogJ9Y1CXz3S7J3MtRU4jZbX8vxzPI0UjAOEd60Cxg0LnMus1Gn9u-LD-6gLO2C2S4F0ETFPgZwAJsDFFS_A92KlTqk6CvquMM_Y8kM4uQ';
+        $this->tokenFromUserB = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZjNDMzYzgxNmRkZTcwMTUyNzI4NGI5ODAwOGY4NTJhYWY3OWNiZGMxYmRhYTgyYmNiMTZkMGQwYWY3N2E5OTMxYmUwY2JiNjQwOWE1M2NjIn0.eyJhdWQiOiIxIiwianRpIjoiNmM0MzNjODE2ZGRlNzAxNTI3Mjg0Yjk4MDA4Zjg1MmFhZjc5Y2JkYzFiZGFhODJiY2IxNmQwZDBhZjc3YTk5MzFiZTBjYmI2NDA5YTUzY2MiLCJpYXQiOjE1NjgzMDMwNTUsIm5iZiI6MTU2ODMwMzA1NSwiZXhwIjoxNTk5OTI1NDU1LCJzdWIiOiIyMDM5Zjk1My0wNjNjLTQ3MjctYTQ4ZC0xMjQzNTI4M2UyOGUiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwibWluaGFzdmVuZGFzOjpjbGllbnRzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OmNsaWVudHM6d3JpdGUiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNhbGVzOndyaXRlIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczpyZWFkIiwibWluaGFzdmVuZGFzOjp3ZWJob29rczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6c2hpcHBpbmdzOnJlYWQiLCJtaW5oYXN2ZW5kYXM6OnNoaXBwaW5nczp3cml0ZSIsIm1pbmhhc3ZlbmRhczo6Y29uY2lsaWF0aW9uczpyZWFkIiwibWluaGFzdmVuZGFzOjpjb25jaWxpYXRpb25zOndyaXRlIl19.Ow67QIAGyTDq_ZRBdlG8lzbRZd8SE-FREPpEgi6phbzl2LOgBArGuqTr9fTxa3wx95S79BXAz-XYHVHwk5Vh1SRvjy1d-VjEpA5FmPB2WONfbeYycMSsCNWWafbPV0o4m5EgDKijqK0elF94Jmaqp7cjE20d2qmW7aGmAeKxVx90NCY5i00XnD1H5qsjo4O8b3zI1o11S6jQW_-C__8gjmOoIbx4XwzGstbqZ-JiGUBTsFGScNrfswVMRyYvjYjAKtoGdd82Gc88FP9rgXlh79vQsXScvrGkHrj190za9vImwyHjzmxFzyL1dwEWhxh0c9DlfNZGSiig9tKtEn2JzCWG65PW1EsHkbIzuqEOhMGEo7P7OFziodBraOskb01vyQv2Ms6SgM_in6X71Yjll17sPBSvUw2A0Iq3CFwqaPMLDRtHqq32l3HiJtVP1MAv9mX3WX2d_EjkouHhTfyi8IudGyEAIRvOCOZ-VcKcL2ROrHd2m2tDoad1axGCroyhatTmUXJXk1yZqdnvWJCnO2Ri_8SMaPNRaYiyyi8KEnsJaG4VPvGR8zP4Nf4CZlsW26jD-INwmAYhlmG4laCm_R4--IA4ffkEE59AfC3nCjrXwuQRrkVUjEmAIxp8AP6zHVI5qyLUDeB10-KR2Lvx6PaOIv0IKiREussyLy7jba4';
+        
         $this->clientsEndpoint = '/clients';
         $this->createClientRequest = [
             'own_id' => '999128',
@@ -45,9 +45,13 @@ class ClientsCest
         $this->createClientRequest['own_id'] = strval(rand(0,1000000));
 
         $I->sendPOST($this->clientsEndpoint,$this->createClientRequest);
+
         $response = json_decode($I->grabResponse(),true);
 
         $I->seeResponseCodeIs(HttpCode::CREATED);
+        // $I->assertEquals($this->createClientRequest['own_id'],$response['data']['own_id']);
+        // $I->assertEquals($this->createClientRequest['name'],$response['data']['name']);
+        // $I->assertEquals($this->createClientRequest['url'],$response['data']['url']);
         $I->seeResponseMatchesJsonType([
             "data" => [
                 "app_id" => 'string',
@@ -66,26 +70,18 @@ class ClientsCest
                 'id' => 'integer',           
             ]
         ]);
-        
-        $I->assertEquals($this->createClientRequest['own_id'],$response['data']['own_id']);
-        $I->assertEquals($this->createClientRequest['name'],$response['data']['name']);
-        $I->assertEquals($this->createClientRequest['url'],$response['data']['url']);
-  
+
         Fixtures::add('Client',$response);
     }
 
-     /**
+    /**
     * @dataprovider CreateClientWithMissingFieldProvider
     */
     public function CreateClientWithMissingField(APITester $I, \Codeception\Example $example){
 
         $I->wantTo("Cadastra Clientes Faltando Campos");
-       
-        if(isset($example['field'])){
-            $this->createClientRequest[$example['missing']][$example['field']] = null;
-        }else{
-            $this->createClientRequest[$example['missing']] = null;
-        }   
+
+        $this->RemoveField($example);
         
         $I->sendPOST($this->clientsEndpoint,$this->createClientRequest);
 
@@ -113,24 +109,63 @@ class ClientsCest
         ];
     }
 
+    protected function RemoveField( \Codeception\Example $example ){
+
+        if(isset($example['field'])){
+            $this->createClientRequest[$example['missing']][$example['field']] = null;
+        }else{
+            $this->createClientRequest[$example['missing']] = null;
+        }   
+    }
+
+   
+
 
     /**
     * @dataprovider UpdateClientProvider
     * @before CreateClientContract
     */
-    public function UpdateClient(ApiTester $I, \Codeception\Example $example){
+    public function UpdateClientContent(ApiTester $I, \Codeception\Example $example){
 
-        $I->wantTo("Atualizar Clientes");
+        $I->wantTo("Verifica o conteúdo do endpoint PATCH /clients");
 
-        $this->createClientRequest['own_id'] = Fixtures::get('Client')['data']['own_id'];
-        $this->createClientRequest['name']   = $example['name'];
-        $this->createClientRequest['url']    = $example['url'];
+        $this->UpdateClientBuildRequest($example);
 
         $I->sendPATCH($this->clientsEndpoint.'/'.Fixtures::get('Client')['data']['id'],$this->createClientRequest);
 
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseContainsJson( array('name' => $example['name']) );
-        $I->seeResponseContainsJson( array('url' => $example['url']) );
+        $I->seeResponseContainsJson( array('name' => $this->createClientRequest['name']) );
+        $I->seeResponseContainsJson( array('url' => $this->createClientRequest['url']) );
+        $I->seeResponseContainsJson( array('own_id' => $this->createClientRequest['own_id']) );
+
+    }
+
+    protected function UpdateClientBuildRequest( \Codeception\Example $example ){
+
+        $this->createClientRequest['own_id'] = Fixtures::get('Client')['data']['own_id'];
+        $this->createClientRequest['name']   = $example['name'];
+        $this->createClientRequest['url']    = $example['url'];
+    }
+
+    protected function UpdateClientProvider(){
+        return [
+            ['id' => '1','name' => 'segunda','url' => 'https://sitedicaloja.com.br'],
+        ];
+    }
+
+    /**
+    * @dataprovider UpdateClientProvider
+    * @before CreateClientContract
+    */
+    public function UpdateClientContract(ApiTester $I, \Codeception\Example $example){
+
+        $I->wantTo("Verifica o contrato do endpoint PATCH /clients");
+
+        $this->UpdateClientBuildRequest($example);
+
+        $I->sendPATCH($this->clientsEndpoint.'/'.Fixtures::get('Client')['data']['id'],$this->createClientRequest);
+
+        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseMatchesJsonType([
             "data" => [
                 'id' => 'integer',
@@ -141,22 +176,14 @@ class ClientsCest
                 'settings' => 'array',
                 'account_id' => 'string',
                 'user_id' => 'string',
-
             ]
         ]);
     }
 
-    protected function UpdateClientProvider(){
-        return [
-            ['id' => '1','name' => 'segunda','url' => 'https://sitedicaloja.com.br'],
-            ['id' => '1','name' => 'terca','url' => 'https://sitediloja.com.br'],
-        ];
-    }
 
+    public function CheckClientContract(ApiTester $I){
 
-    public function CheckClient(ApiTester $I){
-
-        $I->wantTo("Consultar Clientes");
+        $I->wantTo("Verifica o contrato do endpoint GET /clients");
 
         $I->sendGET($this->clientsEndpoint);
 
@@ -184,18 +211,25 @@ class ClientsCest
 
     /** 
     * @before CreateClientContract
-
     */
-    public function CheckClientById(ApiTester $I){
+    public function GetClientByIdContent(ApiTester $I){
+        $I->wantTo("Verifica conteúdo de GET /clients/{id}");
 
-        $I->wantTo("Verifica Consulta Client por Id");
-
-        $createdTestClient = Fixtures::get('Client');
-
-        $I->sendGET($this->clientsEndpoint.'/'.$createdTestClient['data']['id']);
+        $I->sendGET($this->clientsEndpoint.'/'.Fixtures::get('Client')['data']['id']);
 
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseContainsJson(array('id'=>$createdTestClient['data']['id']));
+        $I->seeResponseContainsJson(array('id'=>Fixtures::get('Client')['data']['id']));
+    }
+
+    /** 
+    * @before CreateClientContract
+    */
+    public function GetClientByIdContract(ApiTester $I){
+        $I->wantTo("Verifica contrato de GET /clients{id}");
+
+        $I->sendGET($this->clientsEndpoint.'/'.Fixtures::get('Client')['data']['id']);
+
+        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseMatchesJsonType([
             "data" => [
                 'id' => 'integer',   

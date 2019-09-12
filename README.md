@@ -49,7 +49,6 @@ Atenção aos tokens de acesso. Sales e Clients utilizam o de usuário. Webhooks
 
 # Como rodar? #
 
-
 * git clone git@bitbucket.org:melhor-envio/minhas-vendas-tests.git 
 Vai clonar o repositório para a pasta, troque para o branch develop
 * composer install 
