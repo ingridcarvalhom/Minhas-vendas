@@ -8,7 +8,7 @@ Atenção aos tokens de acesso. Sales e Clients utilizam o de usuário. Webhooks
 ### Objetivo deste repositório? ###
 
 * Testes de clientes, vendas, webhooks do minhas vendas
-* 0.2
+* 1.0
 * (https://bitbucket.org/melhor-envio/minhas-vendas-tests/src/master/)
 
 # Testes existentes #
@@ -53,11 +53,13 @@ Atenção aos tokens de acesso. Sales e Clients utilizam o de usuário. Webhooks
 Vai clonar o repositório para a pasta, troque para o branch develop
 * composer install 
 Vai instalar as dependencias do composer para o uso do codeception
+* Crie dois tokens de acesso de api de dois usuários diferentes do Melhorenvio.com.br
+* Para criar vá para Gerenciar/Tokens/Novo Token
+* Coloque os dois tokens em Token from user A e token from User B em cada arquivo Cest
 
 * Configuration
   Configure api.suite.yml para apontar o url(local/develop) onde está o minhas vendas a ser executado.
-* Dependencies
-  Não é necessario nenhuma instalação adicional. 
+
 * Database configuration
 Não é necessário nenhuma configuração de banco de dados além daquelas necessárias pelo minhas-vendas.
 
@@ -72,13 +74,10 @@ Executa um teste específico de um conjunto de testes
 * ./vendor/bin/codecept run api ExemploCest:func
 Executa todos os testes que tem o inicio func
 
-* ./vendor/bin/codecept run api -vv
-Deixam mais detalhadas as respostas
-* ./vendor/bin/codecept run api -vvv
-Ainda mais detalhadas
-* ./vendor/bin/codecept run api --steps
-Mostra o passo a passo dos testes
-* Ao colocar --html gera um report html em _output com nome de report.html
+* -vv Deixam mais detalhadas as respostas
+* -vvv Ainda mais detalhadas
+* --steps Mostra o passo a passo dos testes
+* --html Gera um report html em _output com nome de report.html
 
 Mais informações sobre funcionamento na Documentação.  
 
