@@ -36,17 +36,6 @@ Atenção aos tokens de acesso. Sales e Clients utilizam o de usuário. Webhooks
 *   DontSeeSaleFromAnotherUser - Verifica se um usuário não vê vendas do outro 
 *   DeleteAllSales - Deleta todas as vendas (troque para public para usar e rode no terminal)
 
-
-## WebhooksCest ##
-*   FailTokenUsuario - Verifica se autenticação está funcionando
-*   ConsultaWebhooks - Consulta GET /apps/webhooks
-*   ListarWebhooks - Listar tipos de webhooks - GET /apps/webhooks/models
-*   CadastrarWebhooks - Testa cadastro de webhook - POST /apps/webhooks
-*   ApagarWebhook - Testa apagar webhook - DELETE 
-*   AtualizaWebhook - Atualizar webhook - PUT /apps/webhooks/{id}
-
-
-
 # Como rodar? #
 
 * git clone git@bitbucket.org:melhor-envio/minhas-vendas-tests.git 
