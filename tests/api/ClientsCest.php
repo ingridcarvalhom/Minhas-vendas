@@ -74,6 +74,7 @@ class ClientsCest
         Fixtures::add('Client',$response);
     }
 
+
     /**
     * @dataprovider CreateClientWithMissingFieldProvider
     */
@@ -118,8 +119,6 @@ class ClientsCest
         }   
     }
 
-   
-
 
     /**
     * @dataprovider UpdateClientProvider
@@ -152,6 +151,7 @@ class ClientsCest
             ['id' => '1','name' => 'segunda','url' => 'https://sitedicaloja.com.br'],
         ];
     }
+
 
     /**
     * @dataprovider UpdateClientProvider
@@ -221,6 +221,7 @@ class ClientsCest
         $I->seeResponseContainsJson(array('id'=>Fixtures::get('Client')['data']['id']));
     }
 
+
     /** 
     * @before CreateClientContract
     */
@@ -250,6 +251,7 @@ class ClientsCest
         ]);
     }
 
+    
     /** 
     * @before CreateClientContract
     * @before changeUser

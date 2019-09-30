@@ -249,7 +249,7 @@ class SalesCest
                 ]
             ]
         ]);
-        //TODO: Pode ser feito de um modo melhor
+
         $I->seeResponseContainsJson(array('own_id'   =>$this->salesRequest[0]['own_id']));
         $I->seeResponseContainsJson(array('own_url'  =>$this->salesRequest[0]['own_url']));
         $I->seeResponseContainsJson(array('client_id'=>$this->salesRequest[0]['client_id']));
@@ -295,7 +295,6 @@ class SalesCest
         $faker = Faker\Factory::create();
         $this->updateRequest['own_url'] = $faker->url;
     }
-
 
     protected function DeleteSale(ApiTester $I){
 
@@ -429,11 +428,9 @@ class SalesCest
     }
 
 
-
     /**
     * @dataprovider CheckSalesFilterProvider
     * @depends CreateSale
-   
     */
     public function CheckSalesFilter(ApiTester $I, \Codeception\Example $example){
  
@@ -503,7 +500,6 @@ class SalesCest
             // ['filter'=>'updated-between','old'=>'2018-07-29 20:06:05','new'=>'2025-07-30 23:06:05'], //TESTAR MANUALMENTE
             // // ['filter'=>'has-shipping','value'=>'true'], // TODO
             // ['filter'=>'account','value'=>'7999e5fe-a6bf-4757-9feb-9ad513e2a0ea'], //TODO
-              
         ];
     }
 
@@ -539,11 +535,6 @@ class SalesCest
             ['message'=>'client [3,1]','client'=>'3','wrong_client'=>'1'],
         ];
     }
-    
-
-    //TODO Não é possível alterar os status pela api.
-    //Logo pra testar os status é necessário manualmente alterar eles.
-    // FilterByStatus()
 
 
     /**
@@ -578,6 +569,7 @@ class SalesCest
         ];
     }
 
+
     /**
     * @before CreateSale
     * @before CreateSale
@@ -602,6 +594,7 @@ class SalesCest
             ['limit'=>2],
         ];
     }
+
 
     /**
     * @dataprovider CheckFilterWithNoMatchingSalesProvider
@@ -691,6 +684,7 @@ class SalesCest
         ];
     }
 
+
     /** 
     *@before CreateSale
     * @depends CreateSale
@@ -707,6 +701,7 @@ class SalesCest
         $I->seeResponseContains('archived_at');
         $I->dontSeeResponseContainsJson(array('archived_at'=>null));
     }
+
 
     /** 
     * @before CreateSale
@@ -749,7 +744,7 @@ class SalesCest
     * @before changeToUserB
     */
     public function DontSeeSaleFromAnotherUser(ApiTester $I){
-        //TODO separar esse teste em vários, não é uma boa ideia ter vários inserts, foi feito assim para economizar tempo da requisição
+        //Esse teste engloba vários mas foi feito assim para economizar tempo da requisição do createSale.
         $I->wantTo('Verifica se um usuário não vê vendas do outro');
         
         $this->UnauthorizedGetSalesById($I);
@@ -826,6 +821,4 @@ class SalesCest
             $I->sendDELETE($this->salesEndpoint.'/'.$sale['id']);
         }
     }
-
-
 }
