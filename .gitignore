@@ -2,3 +2,6 @@
 composer.lock
 /tests/_output
 /.project
+.idea
+/tests/_data/
+/tests/_support/_generated/
