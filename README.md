@@ -4,7 +4,7 @@ Este pacote contém todos os testes de api envolvendo o projeto do minhas-vendas
 
 Para mais informações sobre o minhas vendas procure a documentação dele no bitbucket.  
 
-Dicas:
+#### Dicas ####
 * Atenção aos tokens de acesso. Sales e Clients utilizam o de usuário. Webhooks utilizam o de plataforma.
 
 
@@ -56,8 +56,7 @@ Mais options e informações sobre funcionamento do framework na documentação 
 
 # Com quem eu falo? #
 
-Time:  
-Eduardo Fischer,Philippe Bachilli, Luan Einhardt 
+Time: Eduardo Fischer,Philippe Bachilli, Luan Einhardt 
 
 # Testes existentes #
 
@@ -72,7 +71,7 @@ Eduardo Fischer,Philippe Bachilli, Luan Einhardt
 |CheckClientById | Verifica Consulta Client por Id| GET /clients
 |DontSeeClientFromAnotherUser | Assegura que um usuário não vê clientes de outro usuário| varias rotas| 
 
-## SalesCest ## 
+## SalesCest  
 | Nome | Descrição |Rota| 
 |------|-------|---|
 |CreateSale | Verifica se uma venda é cadastrada com sucesso| POST /sales
