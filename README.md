@@ -4,10 +4,6 @@ Este pacote contém todos os testes de api envolvendo o projeto do minhas-vendas
 
 Para mais informações sobre o minhas vendas procure a documentação dele no bitbucket.  
 
-#### Dicas ####
-* Atenção aos tokens de acesso. Sales e Clients utilizam o de usuário. Webhooks utilizam o de plataforma.
-
-
 ### Objetivo deste repositório? ###
 
 * Testes de clientes, vendas, webhooks do minhas vendas
@@ -19,7 +15,7 @@ Para mais informações sobre o minhas vendas procure a documentação dele no b
    > git clone git@bitbucket.org:melhor-envio/minhas-vendas-tests.git 
 2. Instale as dependências
    > composer install
-* composer install 
+
 3. Crie dois tokens de acesso de api de dois usuários diferentes do Melhorenvio.com.br  
 Para criar vá para Gerenciar/Tokens/Novo Token  
 Coloque os dois tokens no api.suite.yml  
