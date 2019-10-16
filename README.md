@@ -47,7 +47,7 @@ Mais options e informações sobre funcionamento do framework na documentação 
   > ./vendor/bin/codecept generate:cest (suite) (name) 
 * Args
   > suite: (api,acceptance,unit) .Required   
-   name: (nomedoTeste) .Required.
+   name: (nomedoTeste) .Required
 
 
 # Com quem eu falo? #
